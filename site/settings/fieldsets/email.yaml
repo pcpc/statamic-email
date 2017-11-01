@@ -1,0 +1,117 @@
+taxonomies:
+  tags: true
+title: Email
+create_title: ""
+fields:
+  date:
+    type: date
+    display: Date
+    allow_time: true
+    earliest_date: January 1, 1900
+  ministry:
+    type: collection
+    display: Ministry
+    collection:
+      - ministries
+    show_when:
+      ministry_toggle: true
+  content_blocks:
+    type: replicator
+    display: Content Blocks
+    sets:
+      quote:
+        display: Quote
+        fields:
+          quote_text:
+            type: markdown
+            display: Quote Text
+          quote_author:
+            type: text
+            display: Quote Author
+      hero_image:
+        display: Hero Image
+        fields:
+          image:
+            type: assets
+            display: Image
+            container: main
+            folder: img
+            max_files: 1
+            mode: grid
+          hero_text:
+            type: markdown
+            display: Hero Text
+            cheatsheet: true
+            show_when:
+              toggle_herotext: true
+            instructions: "Insert the text you'd like to appear over the hero image here. If you do not want text to appear over the hero image, leave this field blank."
+      text_block:
+        display: Text Block
+        instructions: To be used for full-width email text.
+        fields:
+          email_text:
+            type: markdown
+            display: Email Text
+            cheatsheet: true
+      text_and_image:
+        display: 'Text & Image'
+        fields:
+          text_and_image_text:
+            type: markdown
+            display: 'Text & Image Text'
+            cheatsheet: true
+            width: 50
+          text_and_image_image:
+            type: assets
+            display: 'Text & Image Image'
+            container: main
+            folder: img
+            max_files: 1
+            mode: grid
+            width: 50
+          arrangement:
+            type: select
+            display: Arrangement
+            options:
+              image-left: Image left, text right
+              image-right: Image right, text left
+              image-top: Image top, text bottom
+              image-bottom: Image bottom, text top
+            width: 100
+      signature_image:
+        display: Signature Image
+        fields:
+          signature:
+            type: assets
+            display: Signature
+            container: main
+            folder: img
+            max_files: 1
+      table:
+        display: Table
+        fields:
+          table_field:
+            type: table
+            display: Table Field
+      button:
+        display: Button
+        fields:
+          button_text:
+            type: text
+            display: Button Text
+            instructions: The text that will display within the button
+          button_link:
+            type: text
+            display: Button Link
+            instructions: The url that the button will link to.
+      divider:
+        display: Divider
+        fields:
+          divider_line:
+            type: section
+            display: Divider Line
+            instructions: Dividing line that stretches the width of the email.
+          divider_text:
+            type: text
+            display: Divider Text
+            instructions: 'Optional - heading text that will be placed within two divider lines.'

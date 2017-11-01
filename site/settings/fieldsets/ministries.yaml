@@ -1,0 +1,8 @@
+taxonomies:
+  tags: true
+title: Ministries
+fields:
+  ministry_description:
+    type: markdown
+    display: Ministry Description
+    cheatsheet: true

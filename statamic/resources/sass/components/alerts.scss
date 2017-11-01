@@ -1,0 +1,35 @@
+.sweet-alert {
+	font-family: $font;
+}
+
+.sweet-alert button {
+	border-radius: 3px;
+	font-size: 16px;
+	background: $brand-primary;
+}
+
+.flashdance {
+	position: fixed;
+	z-index: 110;
+	top: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+	pointer-events: none;
+
+	.alert {
+		display: inline-block;
+		padding: 8px 30px 8px 15px;
+		border-radius: 0 0 3px 3px;
+		pointer-events: auto;
+
+		.close {
+			top: 0;
+		}
+	}
+}
+
+.alert-dismissible:focus,
+.alert-dismissible .close:focus {
+    outline: none;
+}

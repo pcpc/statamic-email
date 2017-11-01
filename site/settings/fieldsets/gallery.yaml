@@ -1,0 +1,13 @@
+title: Gallery
+fields:
+  title:
+    type: title
+    display: Title
+  images:
+    type: assets
+    display: Images
+    container: main
+    folder: img
+  content:
+    type: markdown
+    display: Content

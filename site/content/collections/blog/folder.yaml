@@ -1,0 +1,4 @@
+order: date
+fieldset: kitchen
+template: blog/post
+title: Blog
