@@ -1,2 +1,4 @@
 title: Email
 fieldset: email
+template: email/entry
+
