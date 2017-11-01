@@ -3,11 +3,6 @@ taxonomies:
 title: Email
 create_title: ""
 fields:
-  date:
-    type: date
-    display: Date
-    allow_time: true
-    earliest_date: January 1, 1900
   ministry:
     type: collection
     display: Ministry
