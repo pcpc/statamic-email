@@ -88,6 +88,10 @@ fields:
           table_field:
             type: table
             display: Table Field
+          first_row_heading:
+            type: toggle
+            display: Would you like to display the first row of the table as column headings?
+            default: 'false'
       button:
         display: Button
         fields:

@@ -72,7 +72,18 @@ class MJMLListener extends Listener
                 $mjml_body .= $this->addMJMLBodySignatureImage($blocks[$i]['signature']);
                 break;
             case 'table':
-                $mjml_body .= $this->addMJMLBodyTable($blocks[$i]['table_field']);
+                if ( !(in_array('first_row_heading', $blocks[$i])) ) {
+                    $first_row_heading_toggle = false;
+                } else {
+                    $first_row_heading_toggle = $blocks[$i]['first_row_heading'];
+                }
+                $mjml_body .= $this->addMJMLBodyTable($blocks[$i]['table_field'], $first_row_heading_toggle);
+                break;
+            case 'button':
+                $mjml_body .= $this->addMJMLBodyButton($blocks[$i]['button_text'], $blocks[$i]['button_link']);
+                break;
+            case 'divider':
+                $mjml_body .= $this->addMJMLBodyDivider($blocks[$i]['divider_text']);
                 break;
         }
       }
@@ -95,16 +106,6 @@ class MJMLListener extends Listener
       $mjml_code .= $mjml_head . $mjml_body . '</mjml>';
 
       $entry->set('mjml_code', $mjml_code);
-
-
-/*       block-0-type: quote
-      block-1-type: hero_image
-      block-2-type: text_block
-      block-3-type: text_and_image
-      block-4-type: signature_image
-      block-5-type: table
-      block-6-type: button
-      block-7-type: divider */
 
 
 
@@ -145,8 +146,8 @@ class MJMLListener extends Listener
     public function addMJMLBodyQuote ($quote_text, $quote_author) {
         $string =   '<mj-section background-color="#ffffff">
                         <mj-column width="400">
-                            <mj-text align="center" color="#000000" font-size="12" line-height="1.5" font-family="Helvetica Neue" class="italic">'
-                                .$quote_text.'<span>— '.$quote_author.'</span>
+                            <mj-text align="center" color="#000000" font-size="14" line-height="1.5" font-family="Helvetica Neue" class="italic">
+                            <span class="italic">'.$quote_text.'</span><span>— '.$quote_author.'</span>
                             </mj-text>
                         </mj-column>
                     </mj-section>';
@@ -168,7 +169,7 @@ class MJMLListener extends Listener
     public function addMJMLBodyTextBlock ($email_text) {
         $string =   '<mj-section background-color="#ffffff">
                         <mj-column width="600">
-                            <mj-text align="left" color="#000000" font-size="12" line-height="1.25" font-family="Helvetica Neue">'.$email_text.'</mj-text>
+                            <mj-text align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.$email_text.'</mj-text>
                         </mj-column>
                     </mj-section>';
         
@@ -183,14 +184,14 @@ class MJMLListener extends Listener
                                         <mj-image width="200" src="' . DEV_SITE_URL . $text_and_image_image . '" />
                                     </mj-column>
                                     <mj-column>
-                                        <mj-text align="left" color="#000000" font-size="12" line-height="1.25" font-family="Helvetica Neue">'.$text_and_image_text.'</mj-text>
+                                        <mj-text align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.$text_and_image_text.'</mj-text>
                                     </mj-column>
                                 </mj-section>';
                     break;
             case 'image-right':
                     $string =  '<mj-section background-color="#ffffff">
                                     <mj-column>
-                                        <mj-text align="left" color="#000000" font-size="12" line-height="1.25" font-family="Helvetica Neue">'.$text_and_image_text.'</mj-text>
+                                        <mj-text align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.$text_and_image_text.'</mj-text>
                                     </mj-column>
                                     <mj-column>
                                         <mj-image width="200" src="' . DEV_SITE_URL . $text_and_image_image . '" />
@@ -200,12 +201,12 @@ class MJMLListener extends Listener
             case 'image-top':
                     $string =  '<mj-section background-color="#ffffff">
                                     <mj-image width="400" src="' . DEV_SITE_URL . $text_and_image_image . '" />
-                                    <mj-text width="400" align="left" color="#000000" font-size="12" line-height="1.25" font-family="Helvetica Neue">'.$text_and_image_text.'</mj-text>
+                                    <mj-text width="400" align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.$text_and_image_text.'</mj-text>
                                 </mj-section>';
                     break;
             case 'image-bottom':
                     $string =  '<mj-section background-color="#ffffff">
-                                    <mj-text width="400" align="left" color="#000000" font-size="12" line-height="1.25" font-family="Helvetica Neue">'.$text_and_image_text.'</mj-text>
+                                    <mj-text width="400" align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.$text_and_image_text.'</mj-text>
                                     <mj-image width="400" src="' . DEV_SITE_URL . $text_and_image_image . '" />
                                 </mj-section>';
                     break;
@@ -224,36 +225,71 @@ class MJMLListener extends Listener
         return $string;
     }
 
-    public function addMJMLBodyTable ($table_field) {
+    public function addMJMLBodyTable ($table_field, $first_row_heading) {
         $string = '<mj-section background-color="#ffffff"><mj-column><mj-table>';
         for ($i=0; $i < count($table_field); $i++) {
-            $cells = array($table_field['cells'][$i]);
-            if ($i == 0) {
-                $string .= '<tr style="border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">';
+            $cells = array($table_field[$i]['cells']);
+            if (($i == 0) && ($first_row_heading == true)) {
+                $string .= '<tr style="border-bottom:1px solid #ecedee;text-align:center;padding:15px;">';
+            } else {
+                $string .= '<tr style="text-align:center;padding:10px;">';
             }
             //$string .= json_encode($cells);
             foreach ($cells as $c) {
-                $string .= json_encode($c) .'---'. $i;
+                /* $string .= json_encode($c) .'---'. $i; */
                 /* $string .= '<td style="padding: 0 15px 0 0;">'.$c.'</td>'; */
-                /* switch ($i) {
+                switch ($i) {
                     case 0:
-                        $string .= '<th style="padding: 0 15px 0 0;">'.$c.'</th>';
+                        foreach ($c as $t) {
+                            if ($first_row_heading == true) {
+                                $string .= '<th style="padding: 15px;">'.$t.'</th>';
+                            } else {
+                                $string .= '<td style="padding: 10px;">'.$t.'</td>';
+                            }
+                        }
                         break;
                     default:
-                        $string .= '<td style="padding: 0 15px 0 0;">'.$c.'</td>';
+                        foreach ($c as $t) {
+                            $string .= '<td style="padding: 10px;">'.$t.'</td>';
+                        }
                         break;
-                } */
+                }
                 /* if ($i == 0) {
                     $string .= '<th style="padding: 0 15px 0 0;">'.$c.'</th>';
                 } else {
                     $string .= '<td style="padding: 0 15px 0 0;">'.$c.'</td>';
                 } */
             }
-            if ((count($table_field) - $i) == 1) {
-                $string .= '</tr>';
-            }
+            $string .= '</tr>';
         }
         $string .= '</mj-table></mj-column></mj-section>';
+        
+        return $string;
+    }
+
+    public function addMJMLBodyButton ($button_text, $button_link) {
+        $string =   '<mj-section>
+                        <mj-column>
+                            <mj-button href="' . $button_link . '" background-color="#A7885D" color="#ffffff" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.$button_text.'</mj-button>
+                        </mj-column>
+                    </mj-section>';
+        
+        return $string;
+    }
+
+    public function addMJMLBodyDivider ($divider_text) {
+        /* WAZ - not currently working when no divider text is entered... */
+        if (is_null($divider_text)) {
+            $divider_addon = '';
+        } else {
+            $divider_addon = '<mj-text font-size="14" line-height="1.25" font-family="Helvetica Neue" align="center" color="#999999" letter-spacing="1px">'.strtoupper($divider_text).'</mj-text><mj-divider border-width="1px" border-style="dashed" border-color="lightgrey" />';
+        }
+        $string =   '<mj-section>
+                        <mj-column>
+                            <mj-divider border-width="1px" border-style="dashed" border-color="lightgrey" />
+                            '.$divider_addon.'
+                        </mj-column>
+                    </mj-section>';
         
         return $string;
     }
