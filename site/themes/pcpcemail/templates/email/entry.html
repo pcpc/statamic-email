@@ -1,4 +1,83 @@
 <div>
     <h1>{{ title }}</h1>
-    <p>This is templates/email/entry.html</p>
+    <p>This is templates/email/entry.html. boo-yah</p>
+    <div class="content">
+        {{ content_blocks }}
+            {{ if type == "quote" }}
+                <blockquote>
+                    {{ quote_text }}
+                    {{ if quote_author }}<cite>&mdash; {{ quote_author }}</cite>{{ /if }}
+                </blockquote>
+                <div class="mjml-code">
+                    <p>MJML Code:</p>
+                    <pre>
+                        &lt;mj-head&gt;
+                            &lt;mj-style inline="inline"&gt;
+                                .italic {
+                                    font-style: italic;
+                                }
+                            &lt;/mj-style&gt;
+                        &lt;/mj-head&gt;
+                        &lt;mj-section background-color="#ffffff"&gt;
+                            &lt;mj-column width="400"&gt;
+                                &lt;mj-text align="center" color="#000000" font-size="12px" font-family="Helvetica Neue"&gt;
+                                    {{ quote_text }} &lt;span class="italic"&gt;&mdash; {{ quote_author }}&lt;/span&gt;
+                                &lt;/mj-text&gt;
+                            &lt;/mj-column&gt;
+                        &lt;/mj-section&gt;
+                    </pre>
+                </div>
+            {{ elseif type == "hero_image" }}
+                <div class="hero-image-container">
+                    <img src="{{ image }}" class="hero-image" alt="PCPC Hero Image">
+                </div>
+                {{ if hero_text }}<h1 class="hero-text">{{ hero_text }}</h1>{{ /if }}
+            {{ elseif type == "text_block" }}
+                <div class="text-block">
+                    {{ email_text | markdown }}
+                </div>
+            {{ elseif type == "text_and_image" }}
+                <div class="text-and-image">
+                    {{ if arrangement == 'image-right' }}
+                        <div class="text-left">{{ text_and_image_text | markdown }}</div>
+                        <img src="{{ text_and_image_image }}" class="image-right" alt="PCPC Image">
+                    {{ elseif arrangement == 'image-left' }}
+                        <img src="{{ text_and_image_image }}" class="image-left" alt="PCPC Image">
+                        <div class="text-right">{{ text_and_image_text | markdown }}</div>
+                    {{ elseif arrangement == 'image-top' }}
+                        <img src="{{ text_and_image_image }}" class="image-top" alt="PCPC Image">
+                        <div class="text-bottom">{{ text_and_image_text | markdown }}</div>
+                    {{ elseif arrangement == 'image-bottom' }}
+                        <div class="text-top">{{ text_and_image_text | markdown }}</div>
+                        <img src="{{ text_and_image_image }}" class="image-bottom" alt="PCPC Image">
+                    {{ /if }}
+                </div>
+            {{ elseif type == "signature_image" }}
+                <div class="signature-image-container">
+                    <img src="{{ signature }}" class="signature-image" alt="PCPC Signature Image">
+                </div>
+            {{ elseif type == "table" }}
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <td>{{ cells }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ cells }}</td>
+                        </tr>
+                    </table>
+                </div>
+            {{ elseif type == "button" }}
+                <a href="{{ button_link }}" class="btn btn-primary">{{ button_text }}</a>
+            {{ elseif type == "divider" }}
+                <div class="divider-block">
+                    <div class="divider"></div>
+                    {{ if divider_text }}
+                        <h3 class="divider-text">{{ divider_text }}</h3>
+                        <div class="divider"></div>
+                    {{ /if }}
+                </div>
+            {{ /if }}
+        {{ /content_blocks }}
+    </div>
 </div>

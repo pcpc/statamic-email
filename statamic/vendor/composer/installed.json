@@ -3714,5 +3714,21 @@
             }
         ],
         "description": "A Laravel 5 package to output to the console from outside of command classes"
+    },
+    {
+        "name": "lawson-hopkins/mjml",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "dist": {
+            "type": "path",
+            "url": "../site/addons/MJML",
+            "reference": "2e184e4b939e8b6dbf3694eb00a3ff5117f022fc",
+            "shasum": null
+        },
+        "type": "library",
+        "installation-source": "dist",
+        "transport-options": {
+            "symlink": false
+        }
     }
 ]
