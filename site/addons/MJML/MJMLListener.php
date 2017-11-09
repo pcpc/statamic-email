@@ -3,6 +3,7 @@
 namespace Statamic\Addons\MJML;
 
 use Statamic\Extend\Listener;
+use Michelf\MarkdownExtra;
 
 class MJMLListener extends Listener
 {
@@ -147,7 +148,7 @@ class MJMLListener extends Listener
         $string =   '<mj-section background-color="#ffffff">
                         <mj-column width="400">
                             <mj-text align="center" color="#000000" font-size="14" line-height="1.5" font-family="Helvetica Neue" class="italic">
-                            <span class="italic">'.$quote_text.'</span><span>— '.$quote_author.'</span>
+                            <span class="italic">'.markdown($quote_text).'</span><span>  — '.$quote_author.'</span>
                             </mj-text>
                         </mj-column>
                     </mj-section>';
@@ -158,7 +159,7 @@ class MJMLListener extends Listener
     public function addMJMLBodyHeroImage ($image, $hero_text) {
         $string =   '<mj-section background-url="'. DEV_SITE_URL . $image .'" background-size="cover" background-repeat="no-repeat">
                         <mj-column width="600">
-                            <mj-text align="center" color="#fff" font-size="40" line-height="1.25" padding-top="40" padding-bottom="40" font-family="Helvetica Neue">'.$hero_text.'</mj-text>
+                            <mj-text align="center" color="#fff" font-size="40" line-height="1.25" padding-top="40" padding-bottom="40" font-family="Helvetica Neue">'.markdown($hero_text).'</mj-text>
                         </mj-column>
                     </mj-section>';
         
@@ -169,7 +170,7 @@ class MJMLListener extends Listener
     public function addMJMLBodyTextBlock ($email_text) {
         $string =   '<mj-section background-color="#ffffff">
                         <mj-column width="600">
-                            <mj-text align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.$email_text.'</mj-text>
+                            <mj-text align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.markdown($email_text).'</mj-text>
                         </mj-column>
                     </mj-section>';
         
@@ -184,14 +185,14 @@ class MJMLListener extends Listener
                                         <mj-image width="200" src="' . DEV_SITE_URL . $text_and_image_image . '" />
                                     </mj-column>
                                     <mj-column>
-                                        <mj-text align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.$text_and_image_text.'</mj-text>
+                                        <mj-text align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.markdown($text_and_image_text).'</mj-text>
                                     </mj-column>
                                 </mj-section>';
                     break;
             case 'image-right':
                     $string =  '<mj-section background-color="#ffffff">
                                     <mj-column>
-                                        <mj-text align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.$text_and_image_text.'</mj-text>
+                                        <mj-text align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.markdown($text_and_image_text).'</mj-text>
                                     </mj-column>
                                     <mj-column>
                                         <mj-image width="200" src="' . DEV_SITE_URL . $text_and_image_image . '" />
@@ -201,12 +202,12 @@ class MJMLListener extends Listener
             case 'image-top':
                     $string =  '<mj-section background-color="#ffffff">
                                     <mj-image width="400" src="' . DEV_SITE_URL . $text_and_image_image . '" />
-                                    <mj-text width="400" align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.$text_and_image_text.'</mj-text>
+                                    <mj-text width="400" align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.markdown($text_and_image_text).'</mj-text>
                                 </mj-section>';
                     break;
             case 'image-bottom':
                     $string =  '<mj-section background-color="#ffffff">
-                                    <mj-text width="400" align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.$text_and_image_text.'</mj-text>
+                                    <mj-text width="400" align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.markdown($text_and_image_text).'</mj-text>
                                     <mj-image width="400" src="' . DEV_SITE_URL . $text_and_image_image . '" />
                                 </mj-section>';
                     break;
