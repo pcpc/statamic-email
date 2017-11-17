@@ -112,26 +112,35 @@ class MJMLListener extends Listener
 
       // CURL Request
       
-/*       $mjml_app_id='INSERT MJML APP ID HERE';
-      $mjml_sk='INSERT MJML SK HERE';
+      $mjml_app_id='0112c424-a153-4fd7-ac97-b3e1b412b84b';
+      $mjml_sk='f9d570fc-f819-41ee-8acf-962fd75a2245';
       $url='https://api.mjml.io/v1/render';
       // may need double quotes around $userpwd
       $userpwd = $mjml_app_id.':'.$mjml_sk;
+
+      $mjml_code_json = '{
+                            "mjml": ' . json_encode($mjml_code) . '
+      }';
       
       $ch = curl_init();
       curl_setopt($ch, CURLOPT_URL, $url);
-      // curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-      // curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+      curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+      
       // curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-      curl_setopt($ch, CURLOPT_USERPWD, $userpwd);
-      curl_setopt($ch, CURLOPT_POSTFIELDS, $mjml_code);
+      curl_setopt($ch, CURLOPT_USERPWD, '0112c424-a153-4fd7-ac97-b3e1b412b84b:3f447dbf-0aed-44fd-a60c-dbf614acb396');
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $mjml_code_json);
       $mjml_result=curl_exec($ch);
       $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);   //get status code
       curl_close($ch);
 
       // End CURL Request
 
-      $entry->set('mjml_result', $mjml_result); */
+      $mjml_result2 = json_decode($mjml_result, true);
+
+      $entry->set('mjml_status_code', $status_code);
+      $entry->set('mjml_errors', $mjml_result2['errors']);
+      $entry->set('html', $mjml_result2['html']);
 
       $entry->save();
     
@@ -243,15 +252,15 @@ class MJMLListener extends Listener
                     case 0:
                         foreach ($c as $t) {
                             if ($first_row_heading == true) {
-                                $string .= '<th style="padding: 15px;">'.$t.'</th>';
+                                $string .= '<th style="padding: 15px; text-align:center">'.$t.'</th>';
                             } else {
-                                $string .= '<td style="padding: 10px;">'.$t.'</td>';
+                                $string .= '<td style="padding: 10px; text-align:center">'.$t.'</td>';
                             }
                         }
                         break;
                     default:
                         foreach ($c as $t) {
-                            $string .= '<td style="padding: 10px;">'.$t.'</td>';
+                            $string .= '<td style="padding: 10px; text-align:center">'.$t.'</td>';
                         }
                         break;
                 }
