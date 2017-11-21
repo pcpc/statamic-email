@@ -8,12 +8,3 @@ widgets:
     limit: 10
     width: full
     title: Emails
-  - 
-    type: collection
-    collection: blog
-    limit: 5
-    width: half
-  - 
-    type: collection
-    collection: things
-    limit: 3

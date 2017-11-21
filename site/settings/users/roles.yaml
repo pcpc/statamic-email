@@ -11,3 +11,6 @@ d32e14fb-08c9-44c2-aaf8-21200852bafd:
     - collections:email:edit
     - collections:email:create
     - collections:email:delete
+    - assets:main:edit
+    - assets:main:create
+    - assets:main:delete
