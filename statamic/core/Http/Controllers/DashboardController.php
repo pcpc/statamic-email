@@ -38,10 +38,26 @@ class DashboardController extends CpController
     {
         return collect(Config::get('cp.widgets', []))->map(function ($config) use ($loader) {
             $widget = $loader->load(array_get($config, 'type'), $config);
+
             return [
+                'widget' => $widget,
                 'width' => $widget->get('width', 'half'),
                 'html' => (string) $widget->html()
             ];
+        })->filter(function ($item) {
+            if (! $permissions = $item['widget']->get('permissions')) {
+                return true;
+            }
+
+            $user = User::getCurrent();
+
+            foreach ($permissions as $permission) {
+                if ($user->can($permission)) {
+                    return true;
+                }
+            }
+
+            return false;
         });
     }
 }

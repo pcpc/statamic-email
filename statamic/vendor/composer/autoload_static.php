@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit70a8397fced4b811b8470411b9b6a02d
+class ComposerStaticInit96bde071ca89e9124ba50b316ab2cbff
 {
     public static $files = array (
         '95a22d2145ae40de20dc7ea7be07a610' => __DIR__ . '/../..' . '/bootstrap/helpers.php',
@@ -3045,9 +3045,6 @@ class ComposerStaticInit70a8397fced4b811b8470411b9b6a02d
         'Statamic\\Search\\IndexNotFoundException' => __DIR__ . '/../..' . '/core/Search/IndexNotFoundException.php',
         'Statamic\\Search\\ItemResolver' => __DIR__ . '/../..' . '/core/Search/ItemResolver.php',
         'Statamic\\Search\\Search' => __DIR__ . '/../..' . '/core/Search/Search.php',
-        'Statamic\\SiteHelpers\\Filters' => __DIR__ . '/../..' . '/../site/helpers/Filters.php',
-        'Statamic\\SiteHelpers\\Modifiers' => __DIR__ . '/../..' . '/../site/helpers/Modifiers.php',
-        'Statamic\\SiteHelpers\\Tags' => __DIR__ . '/../..' . '/../site/helpers/Tags.php',
         'Statamic\\Stache\\AggregateRepository' => __DIR__ . '/../..' . '/core/Stache/AggregateRepository.php',
         'Statamic\\Stache\\Driver' => __DIR__ . '/../..' . '/core/Stache/Driver.php',
         'Statamic\\Stache\\Drivers\\AbstractDriver' => __DIR__ . '/../..' . '/core/Stache/Drivers/AbstractDriver.php',
@@ -3659,10 +3656,10 @@ class ComposerStaticInit70a8397fced4b811b8470411b9b6a02d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit70a8397fced4b811b8470411b9b6a02d::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit70a8397fced4b811b8470411b9b6a02d::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit70a8397fced4b811b8470411b9b6a02d::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit70a8397fced4b811b8470411b9b6a02d::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit96bde071ca89e9124ba50b316ab2cbff::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit96bde071ca89e9124ba50b316ab2cbff::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit96bde071ca89e9124ba50b316ab2cbff::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit96bde071ca89e9124ba50b316ab2cbff::$classMap;
 
         }, null, ClassLoader::class);
     }

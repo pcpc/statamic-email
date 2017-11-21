@@ -21,7 +21,7 @@ class RelateFieldtype extends SuggestFieldtype
         // even if there is only one item. An example of this is how the pages
         // fieldtype uses another pages fieldtype for its "parent" value.
         if ($this->is_config && $max_items == 1) {
-            return $data[0];
+            return empty($data) ? null : $data[0];
         }
 
         return $data;

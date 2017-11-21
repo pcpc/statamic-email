@@ -226,6 +226,11 @@ class AddonRepository
         return new static($files);
     }
 
+    public function filenameRegex($regex)
+    {
+        return new static($this->files->filterByRegex($regex));
+    }
+
     public function installed()
     {
         $files = $this->files->filter(function ($path) {

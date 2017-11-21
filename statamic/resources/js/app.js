@@ -1,5 +1,10 @@
+import Notifications from './mixins/Notifications.js';
+require('./components/NotificationBus');
+
 var vm = new Vue({
     el: '#statamic',
+
+    mixins: [ Notifications ],
 
     data: {
         isPublishPage: false,
@@ -7,12 +12,9 @@ var vm = new Vue({
         showShortcuts: false,
         navVisible: false,
         version: Statamic.version,
-        flashSuccess: Statamic.flashSuccess,
-        flashError: false,
-        flashSuccessTimer: null,
         draggingNonFile: false,
         sneakPeekViewport: null,
-        sneakPeekFields: null
+        sneakPeekFields: null,
     },
 
     computed: {
@@ -141,7 +143,7 @@ var vm = new Vue({
                 const win = $(window);
                 header.parent().toggleClass('stuck', win.scrollTop() > 90);
             });
-        }
+        },
     },
 
     ready: function() {
@@ -160,11 +162,6 @@ var vm = new Vue({
             this.$broadcast('close-dropdown', null);
         }.bind(this), 'keyup');
 
-        // Clear the initial flash message after a second.
-        this.flashSuccessTimer = setTimeout(() => {
-            this.flashSuccess = null;
-        }, 1000);
-
         // Keep track of whether something other than a file is being dragged
         // so that components can tell when a file is being dragged.
         window.addEventListener('dragstart', this.dragStart);
@@ -174,20 +171,6 @@ var vm = new Vue({
     },
 
     events: {
-        'setFlashSuccess': function (msg, timeout) {
-            this.flashSuccess = msg
-
-            clearTimeout(this.flashSuccessTimer);
-
-            if (timeout) {
-                this.flashSuccessTimer = setTimeout(() => {
-                    this.flashSuccess = null;
-                }, timeout);
-            }
-        },
-        'setFlashError': function (msg) {
-            this.flashError = msg
-        },
         'changesMade': function (changed) {
             // If true, a confirmation dialog will be displayed when the user tries to
             // navigate away (or refresh, etc). If false, the dialog will no longer show.

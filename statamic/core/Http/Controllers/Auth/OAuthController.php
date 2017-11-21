@@ -91,7 +91,9 @@ class OAuthController extends Controller
 
         parse_str($query, $query);
 
-        return array_get($query, 'redirect', $default);
+        return URL::makeAbsolute(
+            array_get($query, 'redirect', $default)
+        );
     }
 
     /**

@@ -157,7 +157,7 @@ final class Addon
      */
     public function settingsUrl()
     {
-        return URL::assemble('/', CP_ROUTE, 'addons', $this->slug(), 'settings');
+        return route('addon.settings', $this->slug());
     }
 
     /**

@@ -61,12 +61,21 @@
                         @yield('content')
                   </div>
             </div>
+
+            <vue-toast v-ref:toast></vue-toast>
       </div>
 
       <script>
             Statamic.translations = {!! $translations !!};
             Statamic.permissions = '{!! $permissions !!}';
             Statamic.version = '{!! STATAMIC_VERSION !!}';
+
+            @if(session()->has('success'))
+                Statamic.flash = [{
+                    type:    'success',
+                    message: '{{ session()->get('success') }}',
+                }];
+            @endif
       </script>
       @include('partials.scripts')
       @yield('scripts')

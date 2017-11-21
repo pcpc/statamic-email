@@ -40,9 +40,11 @@ class EntryFactory extends ContentFactory implements EntryFactoryContract
      */
     public function date($date = null)
     {
+        $hasTime = !is_null($date) && strlen($date) > 10;
+
         $date = ($date) ? Carbon::parse($date) : Carbon::now();
 
-        $this->order = $date->toDateString();
+        $this->order = ($hasTime) ? $date->format('Y-m-d-Hi') : $date->format('Y-m-d');
 
         return $this;
     }

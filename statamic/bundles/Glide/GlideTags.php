@@ -189,6 +189,11 @@ class GlideTags extends Tags
             return $item;
         }
 
+        // Double colons indicate an asset ID.
+        if (Str::contains($item, '::')) {
+            return Asset::find($item);
+        }
+
         // In a subfolder installation, the subfolder will likely be passed in
         // with the path. We don't want it in there, so we'll strip it out.
         // We'll need it to have a leading slash to be treated as a URL.

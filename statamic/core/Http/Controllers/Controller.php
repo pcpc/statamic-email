@@ -66,6 +66,7 @@ abstract class Controller extends BaseController
                 'now'          => $now,
                 'today'        => $now,
                 'locale'       => site_locale(),
+                'locale_name'  => Config::getLocaleName(),
                 'get'          => $get,
                 'post'         => $post,
                 'get_post'     => $get_post,

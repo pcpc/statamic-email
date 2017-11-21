@@ -185,15 +185,21 @@ class LoggingHandler
      */
     protected function registerStreamHandler($config)
     {
-        $path = Str::ensureRight(array_get($config, 'path', storage_path('logs')), '/');
-        $path .= 'statamic';
+        $path = array_get($config, 'path');
 
-        if (array_get($config, 'daily')) {
-            $path .= '-' . date('Y-m-d');
+        if (! Str::startsWith($path, 'php://')) {
+            $path = Str::ensureRight(array_get($config, 'path', storage_path('logs')), '/');
+            $path .= 'statamic';
+
+            if (array_get($config, 'daily')) {
+                $path .= '-' . date('Y-m-d');
+            }
+
+            $path = $path . '.log';
         }
 
         return (new StreamHandler(
-            $path.'.log',
+            $path,
             array_get($config, 'level', Logger::DEBUG)
         ))->setFormatter(new LineFormatter(null, null, true, true));
     }

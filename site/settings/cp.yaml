@@ -1,18 +1,21 @@
+start_page: dashboard
+date_format: Y/n/d
+pagination_size: 50
 widgets:
-  -
+  - 
+    type: collection
+    collection: email
+    limit: 10
+    width: full
+    title: Emails
+    permissions:
+      - collections:email:edit
+  - 
     type: collection
     collection: blog
     limit: 5
-  -
+    width: half
+  - 
     type: collection
     collection: things
-    limit: 5
-  -
-    type: form
-    form: contact
-    limit: 5
-    title: Recent Submissions
-    width: full
-    fields:
-      - name
-      - email
+    limit: 3

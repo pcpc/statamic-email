@@ -307,7 +307,9 @@ abstract class PublishController extends CpController
 
             if ($type === 'replicator') {
                 foreach ($config['sets'] as $set) {
-                    $suggestFields = array_merge($suggestFields, $this->getSuggestFields($set['fields'], $prefix . $handle));
+                    if (isset($set['fields'])) {
+                        $suggestFields = array_merge($suggestFields, $this->getSuggestFields($set['fields'], $prefix . $handle));
+                    }
                 }
             }
 

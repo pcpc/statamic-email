@@ -15,4 +15,5 @@ class MJMLController extends Controller
     {
         return $this->view('index');
     }
+
 }

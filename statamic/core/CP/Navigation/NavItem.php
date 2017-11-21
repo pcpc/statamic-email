@@ -94,6 +94,11 @@ class NavItem
         return $this->children->has($key);
     }
 
+    public function get($key)
+    {
+        return $this->children->get($key);
+    }
+
     public function remove($key)
     {
         return $this->children->remove($key);

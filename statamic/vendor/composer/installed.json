@@ -3722,7 +3722,7 @@
         "dist": {
             "type": "path",
             "url": "../site/addons/MJML",
-            "reference": "2e184e4b939e8b6dbf3694eb00a3ff5117f022fc",
+            "reference": "17369c7fe6d362fbc96c54d3990524d42bfd00c2",
             "shasum": null
         },
         "type": "library",

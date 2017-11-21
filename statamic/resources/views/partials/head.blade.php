@@ -6,21 +6,21 @@
 
 <title>{{ $title or '' }} | Statamic</title>
 <link href="{{ cp_resource_url('css/cp.css') }}?v={{ STATAMIC_VERSION }}" rel="stylesheet" />
-@if (File::exists('site/helpers/cp/override.css'))
+@if (\Statamic\API\File::exists('site/helpers/cp/override.css'))
     <link href="{{ resource_url('helpers/cp/override.css') }}" rel="stylesheet" />
 @endif
 <link rel="icon" type="image/png" href="{{ cp_resource_url('img/favicon@2x.png') }}" sizes="32x32" />
 <link rel="icon" type="image/png" href="{{ cp_resource_url('img/favicon.png') }}" sizes="16x16" />
 <script>
     var Statamic = {
-    	'siteRoot': '{!! SITE_ROOT !!}',
-    	'cpRoot': '{!! $cp_root !!}',
-    	'urlPath': '/{!! request()->path() !!}',
-    	'resourceUrl': '{!! cp_resource_url('/') !!}',
-    	'locales': {!! json_encode(Statamic\API\Config::get('system.locales')) !!},
-    	'flashSuccess': '{{ session('success') }}',
+        'siteRoot': '{!! SITE_ROOT !!}',
+        'cpRoot': '{!! $cp_root !!}',
+        'urlPath': '/{!! request()->path() !!}',
+        'resourceUrl': '{!! cp_resource_url('/') !!}',
+        'locales': {!! json_encode(Statamic\API\Config::get('system.locales')) !!},
         'markdownHardWrap': {{ bool_str(Statamic\API\Config::get('theming.markdown_hard_wrap')) }},
-        'conditions': {}
+        'conditions': {},
+        'flash': [],
     };
 </script>
 

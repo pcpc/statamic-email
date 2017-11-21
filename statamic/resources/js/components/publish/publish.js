@@ -260,7 +260,7 @@ module.exports = {
                     this.formData.continue = null;
                     this.saving = false;
                     this.title = this.formData.fields.title;
-                    this.$dispatch('setFlashSuccess', data.message, 1000);
+                    this.$dispatch('setFlashSuccess', data.message, { timeout: 1500 });
                 } else {
                     this.$dispatch('setFlashError', translate('cp.error'));
                     this.saving = false;

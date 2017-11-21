@@ -48,13 +48,33 @@ class Nav
         return $this->tree->get($key)->has(join('.', $parts));
     }
 
+    public function get($key)
+    {
+        if (! Str::contains($key, '.')) {
+            return $this->tree->get($key);
+        }
+
+        $parts = explode('.', $key);
+
+        $key = array_shift($parts);
+
+        return $this->tree->get($key)->get(join('.', $parts));
+    }
+
     public function remove($key)
     {
         if ($key instanceof NavItem) {
             $key = $key->name();
         }
 
-        return $this->tree->pull($key);
+        if (! Str::contains($key, '.')) {
+            return $this->tree->pull($key);
+        }
+
+        $parts = explode('.', $key);
+        $removeKey =  array_pull($parts, count($parts)-1);
+
+        return $this->get(join('.', $parts))->remove($removeKey);
     }
 
     public function children()

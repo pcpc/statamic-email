@@ -2,3 +2,12 @@ d32e14fb-08c9-44c2-aaf8-21200852bafd:
   title: Admin
   permissions:
     - super
+7abe1f77-667f-4ae1-96b9-54e02e0840a7:
+  title: Editor
+  slug: editor
+  permissions:
+    - cp:access
+    - content:view_drafts_on_frontend
+    - collections:email:edit
+    - collections:email:create
+    - collections:email:delete
