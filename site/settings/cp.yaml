@@ -8,8 +8,6 @@ widgets:
     limit: 10
     width: full
     title: Emails
-    permissions:
-      - collections:email:edit
   - 
     type: collection
     collection: blog

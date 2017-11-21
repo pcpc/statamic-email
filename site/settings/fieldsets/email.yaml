@@ -1,7 +1,7 @@
 taxonomies:
   tags: true
 title: Email
-create_title: ""
+create_title: Add New Email
 fields:
   ministry:
     type: collection
