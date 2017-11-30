@@ -67,7 +67,12 @@ class MJMLListener extends Listener
                 $mjml_body .= $this->addMJMLBodyTextBlock($blocks[$i]['email_text']);
                 break;
             case 'text_and_image':
-                $mjml_body .= $this->addMJMLBodyTextAndImage($blocks[$i]['text_and_image_text'], $blocks[$i]['text_and_image_image'], $blocks[$i]['arrangement']);
+                if (!(isset($blocks[$i]['text_and_image_header']))) {
+                    $text_and_image_header = '';
+                } else {
+                    $text_and_image_header = $blocks[$i]['text_and_image_header'];
+                }
+                $mjml_body .= $this->addMJMLBodyTextAndImage($text_and_image_header, $blocks[$i]['text_and_image_text'], $blocks[$i]['text_and_image_image'], $blocks[$i]['arrangement']);
                 break;
             case 'signature_image':
                 $mjml_body .= $this->addMJMLBodySignatureImage($blocks[$i]['signature']);
@@ -84,7 +89,12 @@ class MJMLListener extends Listener
                 $mjml_body .= $this->addMJMLBodyButton($blocks[$i]['button_text'], $blocks[$i]['button_link']);
                 break;
             case 'divider':
-                $mjml_body .= $this->addMJMLBodyDivider($blocks[$i]['divider_text']);
+                if (!(isset($blocks[$i]['divider_text']))) {
+                    $divider_text = '';
+                } else {
+                    $divider_text = $blocks[$i]['divider_text'];
+                }
+                $mjml_body .= $this->addMJMLBodyDivider($divider_text);
                 break;
         }
       }
@@ -186,36 +196,50 @@ class MJMLListener extends Listener
         return $string;
     }
 
-    public function addMJMLBodyTextAndImage ($text_and_image_text, $text_and_image_image, $arrangement) {
+    public function addMJMLBodyTextAndImage ($text_and_image_header, $text_and_image_text, $text_and_image_image, $arrangement) {
+        if (strlen($text_and_image_header) > 0) {
+            $header = '<mj-text align="left" color="#000000" font-size="20" line-height="1.25" font-family="Helvetica Neue">'.$text_and_image_header.'</mj-text>';
+        } else {
+            $header = '';
+        }
         switch ($arrangement) {
             case 'image-left':
                     $string =  '<mj-section background-color="#ffffff">
                                     <mj-column>
-                                        <mj-image width="200" src="' . DEV_SITE_URL . $text_and_image_image . '" />
+                                        <mj-image width="250" height="300" src="' . DEV_SITE_URL . $text_and_image_image . '" />
                                     </mj-column>
                                     <mj-column>
+                                        '.$header.'
                                         <mj-text align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.markdown($text_and_image_text).'</mj-text>
                                     </mj-column>
                                 </mj-section>';
                     break;
             case 'image-right':
+                    if (strlen($text_and_image_header) > 0) {
+                        $header = '<mj-text align="right" color="#000000" font-size="20" line-height="1.25" font-family="Helvetica Neue">'.$text_and_image_header.'</mj-text>';
+                    } else {
+                        $header = '';
+                    }
                     $string =  '<mj-section background-color="#ffffff">
                                     <mj-column>
-                                        <mj-text align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.markdown($text_and_image_text).'</mj-text>
+                                        '.$header.'
+                                        <mj-text align="right" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.markdown($text_and_image_text).'</mj-text>
                                     </mj-column>
                                     <mj-column>
-                                        <mj-image width="200" src="' . DEV_SITE_URL . $text_and_image_image . '" />
+                                        <mj-image width="250" height="300" src="' . DEV_SITE_URL . $text_and_image_image . '" />
                                     </mj-column>
                                 </mj-section>';
                     break;
             case 'image-top':
                     $string =  '<mj-section background-color="#ffffff">
                                     <mj-image width="400" src="' . DEV_SITE_URL . $text_and_image_image . '" />
+                                    '.$header.'
                                     <mj-text width="400" align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.markdown($text_and_image_text).'</mj-text>
                                 </mj-section>';
                     break;
             case 'image-bottom':
                     $string =  '<mj-section background-color="#ffffff">
+                                    '.$header.'
                                     <mj-text width="400" align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.markdown($text_and_image_text).'</mj-text>
                                     <mj-image width="400" src="' . DEV_SITE_URL . $text_and_image_image . '" />
                                 </mj-section>';
@@ -289,7 +313,7 @@ class MJMLListener extends Listener
 
     public function addMJMLBodyDivider ($divider_text) {
         /* WAZ - not currently working when no divider text is entered... */
-        if (is_null($divider_text)) {
+        if (strlen($divider_text) < 1) {
             $divider_addon = '';
         } else {
             $divider_addon = '<mj-text font-size="14" line-height="1.25" font-family="Helvetica Neue" align="center" color="#999999" letter-spacing="1px">'.strtoupper($divider_text).'</mj-text><mj-divider border-width="1px" border-style="dashed" border-color="lightgrey" />';

@@ -51,6 +51,10 @@ fields:
       text_and_image:
         display: 'Text & Image'
         fields:
+          text_and_image_header:
+            type: text
+            display: text_and_image_header
+            instructions: "If you don't need a header, leave this field blank."
           text_and_image_text:
             type: markdown
             display: 'Text & Image Text'
