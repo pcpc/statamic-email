@@ -20,7 +20,7 @@
 
       <nav class="nav-mobile">
           <a href="{{ route('cp') }}" class="logo">
-              {!! svg('statamic-logo') !!}
+              {!! svg('PCPC-vine-logo') !!}
           </a>
           <a @click.prevent="toggleNav" class="toggle">
               <span class="icon icon-menu"></span>
@@ -41,7 +41,7 @@
 
             <nav class="nav-main">
                   <a href="{{ route('cp') }}" class="logo">
-                        {!! inline_svg('statamic-logo') !!}
+                        {!! inline_svg('PCPC-vine-logo') !!}
                         <span class="version" v-cloak>@{{ version }}</span>
                   </a>
                   @include('partials.nav-main')

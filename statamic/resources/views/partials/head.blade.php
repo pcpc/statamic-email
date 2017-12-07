@@ -11,6 +11,7 @@
 @endif
 <link rel="icon" type="image/png" href="{{ cp_resource_url('img/favicon@2x.png') }}" sizes="32x32" />
 <link rel="icon" type="image/png" href="{{ cp_resource_url('img/favicon.png') }}" sizes="16x16" />
+<link rel="stylesheet" href="site/themes/pcpcemail/css/pcpcemail.css">
 <script>
     var Statamic = {
         'siteRoot': '{!! SITE_ROOT !!}',

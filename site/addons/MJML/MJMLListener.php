@@ -96,6 +96,9 @@ class MJMLListener extends Listener
                 }
                 $mjml_body .= $this->addMJMLBodyDivider($divider_text);
                 break;
+            case 'scripture':
+                $mjml_body .= $this->addMJMLBodyScripture($blocks[$i]['reference']);
+                break;
         }
       }
 
@@ -328,21 +331,104 @@ class MJMLListener extends Listener
         return $string;
     }
 
+    public function addMJMLBodyScripture ($reference) {
+
+        /* $url_ref = urlencode($reference);
+        $ref = array(
+            'q' => $url_ref
+        );
+
+        $ref = json_encode($ref);
+
+        $ch = curl_init('https://api.esv.org/v3/passage/text/');
+        // curl_setopt($ch, CURLOPT_URL, 'https://api.esv.org/v3/passage/text/');
+        // curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        $headr = array();
+        $headr[] = 'Content-type: application/json';
+        $headr[] = 'Authorization: Token 28df28a3b3a2be32092d75d40101036209b1fc45';
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
+        
+        // curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $ref);
+        $scripture_result=curl_exec($ch);
+        $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);   //get status code
+        curl_close($ch); */
+
+
+        $key = 'fd9cfff133478926';
+        $passage = urlencode($reference);
+        $options = "include-passage-references=true&include-verse-numbers=false&include-headings=false&include-short-copyright=false&include-audio-link=false";
+        $url = "http://www.esvapi.org/v2/rest/passageQuery?key=$key&passage=$passage&$options";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        /* curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+        $headr = array();
+        $headr[] = 'Accept: application/json';
+        $headr[] = 'Authorization: Token 28df28a3b3a2be32092d75d40101036209b1fc45';
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headr); */
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+        //curl_setopt($ch, CURLOPT_POSTFIELDS, $passage);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        $scripture_result = curl_exec($ch);
+        $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+       /*  $ch = curl_init();
+        
+        curl_setopt($ch, CURLOPT_URL, "https://api.esv.org/v3/passage/text/?q=jn11.35");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        //curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+        
+        
+        $headers = array();
+        $headers[] = "Accept: application/json";
+        $headers[] = "Authorization: Token 2338476f4eeffbbc9817f8265ef179b27f86d3ea";
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        
+        $scripture_result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+        curl_close ($ch); */
+
+
+        $string =  '<mj-section background-color="#ffffff">
+                        <mj-column width="400">
+                            <mj-text align="center" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue" font-style="italic">'.$scripture_result.'</mj-text>
+                        </mj-column>
+                    </mj-section>';
+
+        return $string;
+    }
+
     public function addMJMLHeadInlineClasses ($classes) {
         $unique_classes = array_unique($classes);
-        $mjml_styles = '<mj-style inline="inline">';
         foreach ($unique_classes as $c) {
             switch ($c) {
                 case 'italic':
+                    $mjml_styles = '<mj-style inline="inline">';
                     $mjml_styles .=  '
                                     .italic {
                                         font-style: italic;
                                     }
                                    ';
+                    $mjml_styles .= '</mj-style>';
+                    break;
+                case 'scripture':
+                    $mjml_styles = '<mj-style inline="scripture">';
+                    $mjml_styles .=  '
+                                    .scripture {
+                                        font-style: italic;
+                                    }
+                                ';
+                    $mjml_styles .= '</mj-style>';
                     break;
             }
         }
-        $mjml_styles .= '</mj-style>';
         
         return $mjml_styles;
     }

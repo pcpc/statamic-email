@@ -8,8 +8,6 @@ fields:
     display: Ministry
     collection:
       - ministries
-    show_when:
-      ministry_toggle: true
   content_blocks:
     type: replicator
     display: Content Blocks
@@ -118,3 +116,9 @@ fields:
             type: text
             display: Divider Text
             instructions: 'Optional - heading text that will be placed within two divider lines.'
+      scripture:
+        display: Scripture
+        fields:
+          reference:
+            type: text
+            display: Reference

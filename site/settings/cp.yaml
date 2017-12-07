@@ -8,3 +8,5 @@ widgets:
     limit: 10
     width: full
     title: Emails
+    filter: minfilter
+    minfilter: youth-ministry
