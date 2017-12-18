@@ -5,13 +5,12 @@
 <meta name="robots" content="noindex,nofollow">
 
 <title>{{ $title or '' }} | Statamic</title>
-<link href="{{ cp_resource_url('css/cp.css') }}?v={{ STATAMIC_VERSION }}" rel="stylesheet" />
+<link href="{{ cp_resource_url('css/cp.css') }}" rel="stylesheet" />
 @if (\Statamic\API\File::exists('site/helpers/cp/override.css'))
     <link href="{{ resource_url('helpers/cp/override.css') }}" rel="stylesheet" />
 @endif
 <link rel="icon" type="image/png" href="{{ cp_resource_url('img/favicon@2x.png') }}" sizes="32x32" />
 <link rel="icon" type="image/png" href="{{ cp_resource_url('img/favicon.png') }}" sizes="16x16" />
-<link rel="stylesheet" href="site/themes/pcpcemail/css/pcpcemail.css">
 <script>
     var Statamic = {
         'siteRoot': '{!! SITE_ROOT !!}',

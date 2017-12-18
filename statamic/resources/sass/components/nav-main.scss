@@ -261,7 +261,8 @@
     align-items: center;
     svg {
         width: 90px;
-        height: 20px;
+        height: 70px;
+        padding-top: 10px;
         path { fill: $brand-darker; }
     }
 }

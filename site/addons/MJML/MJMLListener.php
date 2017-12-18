@@ -37,7 +37,7 @@ class MJMLListener extends Listener
     public function createMJMLCode ($entry)
     {
       /* BZ - change on localhost for images to work if testing MJML code */
-      define("DEV_SITE_URL", 'http://pcpcemail.dev');
+      define("DEV_SITE_URL", 'http://pcpcemail.test');
 
       $blocks = $entry->get('content_blocks');
 
@@ -101,6 +101,8 @@ class MJMLListener extends Listener
                 break;
         }
       }
+
+      $mjml_body .= $this->addMJMLFooter();
 
       $unique_block_types = array_unique($block_types);
       $inline_classes = array();
@@ -209,7 +211,7 @@ class MJMLListener extends Listener
             case 'image-left':
                     $string =  '<mj-section background-color="#ffffff">
                                     <mj-column>
-                                        <mj-image width="250" height="300" src="' . DEV_SITE_URL . $text_and_image_image . '" />
+                                        <mj-image width="250" height="200" src="' . DEV_SITE_URL . $text_and_image_image . '" />
                                     </mj-column>
                                     <mj-column>
                                         '.$header.'
@@ -229,7 +231,7 @@ class MJMLListener extends Listener
                                         <mj-text align="right" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.markdown($text_and_image_text).'</mj-text>
                                     </mj-column>
                                     <mj-column>
-                                        <mj-image width="250" height="300" src="' . DEV_SITE_URL . $text_and_image_image . '" />
+                                        <mj-image width="250" height="200" src="' . DEV_SITE_URL . $text_and_image_image . '" />
                                     </mj-column>
                                 </mj-section>';
                     break;
@@ -305,7 +307,7 @@ class MJMLListener extends Listener
     }
 
     public function addMJMLBodyButton ($button_text, $button_link) {
-        $string =   '<mj-section>
+        $string =   '<mj-section background-color="#ffffff">
                         <mj-column>
                             <mj-button href="' . $button_link . '" background-color="#A7885D" color="#ffffff" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.$button_text.'</mj-button>
                         </mj-column>
@@ -315,13 +317,12 @@ class MJMLListener extends Listener
     }
 
     public function addMJMLBodyDivider ($divider_text) {
-        /* WAZ - not currently working when no divider text is entered... */
         if (strlen($divider_text) < 1) {
             $divider_addon = '';
         } else {
-            $divider_addon = '<mj-text font-size="14" line-height="1.25" font-family="Helvetica Neue" align="center" color="#999999" letter-spacing="1px">'.strtoupper($divider_text).'</mj-text><mj-divider border-width="1px" border-style="dashed" border-color="lightgrey" />';
+            $divider_addon = '<mj-text font-size="14" line-height="1" padding="0" font-family="Helvetica Neue" align="center" color="#999999" letter-spacing="1px">'.strtoupper($divider_text).'</mj-text><mj-divider border-width="1px" border-style="dashed" border-color="lightgrey" />';
         }
-        $string =   '<mj-section>
+        $string =   '<mj-section background-color="#ffffff">
                         <mj-column>
                             <mj-divider border-width="1px" border-style="dashed" border-color="lightgrey" />
                             '.$divider_addon.'
@@ -431,6 +432,22 @@ class MJMLListener extends Listener
         }
         
         return $mjml_styles;
+    }
+
+    public function addMJMLFooter () {
+        $string =   '<mj-section background-color="#3C6885">
+                        <mj-column>
+                            <mj-image padding-top="45" width="100" src=" ' . DEV_SITE_URL . '/assets/img/PCPC-vine-logo-white.svg" />
+                            <mj-text align="center" color="#fff" font-size="12" line-height="1" padding-bottom="45" font-family="Helvetica Neue">
+                                <p>Park Cities Presbyterian Church</p>
+                                <p>4124 Oak Lawn Avenue</p>
+                                <p>Dallas, TX 75219</p>
+                                <a href="tel:2142242500" style="color:white; text-decoration:none;">214-224-2500</a>
+                            </mj-text>
+                        </mj-column>
+                    </mj-section>';
+        
+        return $string;
     }
 
     /* public function displayMarkdown ($text) {
