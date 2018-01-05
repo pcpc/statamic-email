@@ -11,13 +11,23 @@ class MinistryFilter extends Filter
      *
      * @return \Illuminate\Support\Collection
      */
-    public function filter()
+    public function filterss($slug)
     {
-        return $this->collection->filter(function ($entry) {
-            return str_contains(
-                $entry->get('ministry'),
-                $this->get('minfilter', '')
-            );
+        $col = Collection::handles();
+        //var_dump($col);
+        $coll = Collection::whereHandle('email');
+        //echo ('hi1');
+        var_dump($coll);
+        $slug->each(function ($item, $key) { 
+            $slug_string = $item;
+            $coll = Collection::whereHandle('email');
+            return $coll->filter(function ($entry) {
+                return str_contains(
+                    $entry->get('ministry'),
+                    $slug_string
+                );
+            });
+            //return 'hi';
         });
     }
 }

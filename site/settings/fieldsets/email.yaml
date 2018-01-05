@@ -122,3 +122,9 @@ fields:
           reference:
             type: text
             display: Reference
+  ministry2:
+    type: select
+    display: Ministry2
+    options:
+      PCPC Men: pcpc_men
+      Membership: membership

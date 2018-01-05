@@ -3,10 +3,5 @@ date_format: Y/n/d
 pagination_size: 50
 widgets:
   - 
-    type: collection
-    collection: email
-    limit: 10
+    type: filtered_emails
     width: full
-    title: Emails
-    filter: minfilter
-    minfilter: youth-ministry

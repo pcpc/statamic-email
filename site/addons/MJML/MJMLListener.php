@@ -36,10 +36,17 @@ class MJMLListener extends Listener
 
     public function createMJMLCode ($entry)
     {
+
       /* BZ - change on localhost for images to work if testing MJML code */
       define("DEV_SITE_URL", 'http://pcpcemail.test');
 
       $blocks = $entry->get('content_blocks');
+
+      // don't do anything unless the type of entry is 'email' (i.e. has blocks)
+
+      if (is_null($blocks)) {
+          return;
+      }
 
       $block_count = count($blocks);
 
@@ -53,7 +60,10 @@ class MJMLListener extends Listener
       $mjml_code = '<mjml>';
       /* will need to determine how to add head inline-style classes only once, only as needed, probably cycle through all distinct block types */
       $mjml_head = '<mj-head>';
+      // add styles to all
+      $mjml_head .= '<mj-attributes><mj-text padding-top="0" padding-bottom="0" /></mj-attributes>';
       $mjml_body = '<mj-body><mj-container>';
+      $mjmj_styles = '';
 
       for ($i=0; $i < count($block_types); $i++) {
         switch ($block_types[$i]) {
@@ -406,12 +416,31 @@ class MJMLListener extends Listener
         return $string;
     }
 
+    
+
+    public function addMJMLFooter () {
+        $string =   '<mj-section background-color="#3C6885">
+                        <mj-column>
+                            <mj-image padding-top="45" width="100" src=" ' . DEV_SITE_URL . '/assets/img/PCPC-vine-logo-white.svg" />
+                            <mj-text align="center" color="#fff" font-size="12" line-height="1" padding-bottom="45" font-family="Helvetica Neue">
+                                <p>Park Cities Presbyterian Church</p>
+                                <p>4124 Oak Lawn Avenue</p>
+                                <p>Dallas, TX 75219</p>
+                                <a href="tel:2142242500" style="color:white; text-decoration:none;">214-224-2500</a>
+                            </mj-text>
+                        </mj-column>
+                    </mj-section>';
+        
+        return $string;
+    }
+
     public function addMJMLHeadInlineClasses ($classes) {
+        $mjml_styles='';
         $unique_classes = array_unique($classes);
         foreach ($unique_classes as $c) {
             switch ($c) {
                 case 'italic':
-                    $mjml_styles = '<mj-style inline="inline">';
+                    $mjml_styles .= '<mj-style inline="inline">';
                     $mjml_styles .=  '
                                     .italic {
                                         font-style: italic;
@@ -432,22 +461,6 @@ class MJMLListener extends Listener
         }
         
         return $mjml_styles;
-    }
-
-    public function addMJMLFooter () {
-        $string =   '<mj-section background-color="#3C6885">
-                        <mj-column>
-                            <mj-image padding-top="45" width="100" src=" ' . DEV_SITE_URL . '/assets/img/PCPC-vine-logo-white.svg" />
-                            <mj-text align="center" color="#fff" font-size="12" line-height="1" padding-bottom="45" font-family="Helvetica Neue">
-                                <p>Park Cities Presbyterian Church</p>
-                                <p>4124 Oak Lawn Avenue</p>
-                                <p>Dallas, TX 75219</p>
-                                <a href="tel:2142242500" style="color:white; text-decoration:none;">214-224-2500</a>
-                            </mj-text>
-                        </mj-column>
-                    </mj-section>';
-        
-        return $string;
     }
 
     /* public function displayMarkdown ($text) {

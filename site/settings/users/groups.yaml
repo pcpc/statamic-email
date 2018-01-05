@@ -27,7 +27,8 @@ a1def96e-96d2-4cbd-a349-c4768842b641:
   slug: pcpc_men
   roles:
     - 7abe1f77-667f-4ae1-96b9-54e02e0840a7
-  users: [ ]
+  users:
+    - 8e65f39d-dc18-4517-b17a-157edd948c8e
 e7596b7d-e7cd-4cbb-8b7f-7fcc0867abc6:
   title: PCPC Women
   slug: pcpc_women
@@ -39,7 +40,8 @@ cb6c6a53-02ef-4509-bbc2-70609bea9f73:
   slug: pcpcwork
   roles:
     - 7abe1f77-667f-4ae1-96b9-54e02e0840a7
-  users: [ ]
+  users:
+    - 8e65f39d-dc18-4517-b17a-157edd948c8e
 1ed82fa8-0199-4028-81a3-27eb2f0db605:
   title: Senior Adults
   slug: senior_adults
@@ -75,7 +77,8 @@ d7c43493-6507-448a-9e61-206c128f34d4:
   slug: young_adults_ministry
   roles:
     - 7abe1f77-667f-4ae1-96b9-54e02e0840a7
-  users: [ ]
+  users:
+    - 8e65f39d-dc18-4517-b17a-157edd948c8e
 c68d33c7-0e83-4196-ad53-5fa8adb1455e:
   title: Youth Ministry
   slug: youth_ministry
