@@ -38,7 +38,7 @@ class MJMLListener extends Listener
     {
 
       /* BZ - change on localhost for images to work if testing MJML code */
-      define("DEV_SITE_URL", 'http://pcpcemail.test');
+      define("DEV_SITE_URL", 'http://email.pcpcnetwork.org');
 
       $blocks = $entry->get('content_blocks');
 

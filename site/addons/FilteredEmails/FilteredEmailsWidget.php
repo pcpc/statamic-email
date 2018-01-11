@@ -24,8 +24,8 @@ class FilteredEmailsWidget extends Widget
 
         $html = '<div class="card flush">
             <div class="head">
-                <h1><a href="http://pcpcemail.test/cp/collections/entries/email">Emails</a></h1>
-                <a href="http://pcpcemail.test/cp/collections/entries/email/create" class="btn btn-primary">Add New Email</a>
+                <h1><a href="http://email.pcpcnetwork.org/cp/collections/entries/email">Emails</a></h1>
+                <a href="http://email.pcpcnetwork.org/cp/collections/entries/email/create" class="btn btn-primary">Add New Email</a>
             </div>
             <div class="card-body pad-16">
                 <table class="dossier">
@@ -46,7 +46,7 @@ class FilteredEmailsWidget extends Widget
                         });
                         
                     });
-                    //dd($trys->id);
+                    //dd($trys);
 
                     foreach ($trys as $try) {
                         //dd($try);
