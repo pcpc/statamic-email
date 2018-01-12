@@ -55,7 +55,7 @@ class FilteredEmailsWidget extends Widget
                             $slug_url = $t['slug_url'];
                             $date = $t['date'];
                             $html .= '<tr>
-                            <td><a href="http://pcpcemail.test/cp/collections/entries/email/' . $slug_url . '">'.$title.'</a></td>
+                            <td><a href="http://email.pcpcnetwork.org/cp/collections/entries/email/' . $slug_url . '">'.$title.'</a></td>
                             <td class="minor text-center"></td>
                             <td class="minor text-right">'.$date.'</td>
                         </tr>';
