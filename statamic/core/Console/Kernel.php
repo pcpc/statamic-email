@@ -59,6 +59,7 @@ class Kernel extends ConsoleKernel
        'Statamic\Console\Commands\Test\TestSiteCommand',
        'Statamic\Console\Commands\Test\TestAddonsCommand',
        'Statamic\Console\Commands\Test\TestMakeCommand',
+       'Statamic\Console\Commands\UserMigrationCommand',
     ];
 
     /**

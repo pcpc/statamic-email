@@ -61,7 +61,7 @@
 /* Replicator/Stacked Grids only
   ========================================================================== */
 
-.replicator-fieldtype, .grid-fieldtype .grid-stacked {
+.replicator, .grid-fieldtype .grid-stacked {
     .list-group-item.group-header {
         background: #edf1f4;
         &.collapsed {

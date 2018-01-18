@@ -1,10 +1,6 @@
 <div class="content-type-{{ contentType }}">
 <div class="publish-form" id="publish-form" :class="{'no-meta' : ! shouldShowMeta}">
 
-    <div v-if="loading" class="loading loading-blocker">
-        <span class="icon icon-circular-graph animation-spin"></span> {{ translate('cp.loading') }}
-    </div>
-
     <div class="publish-errors alert alert-danger" v-if="hasErrors">
         <ul>
             <li v-for="error in errors">{{ error }}</li>
@@ -18,9 +14,14 @@
             <span>{{ title }}</span>
         </h1>
 
-        <div class="controls">
+        <div class="controls flexy">
 
-            <user-options v-if="isUser && !isNew" :username="slug" :status="contentData.status"></user-options>
+            <div class="mr-16 fs-13 o5" v-if="! canEdit">
+                <span class="icon icon-lock"></span>
+                {{ translate('cp.read_only_mode') }}
+            </div>
+
+            <user-options v-if="isUser && !isNew" :username="slug" :status="contentData.status" class="mr-16"></user-options>
 
             <template v-if="editingLayout">
                 <button class="btn" @click="editLayout(false)">
@@ -33,7 +34,7 @@
                 </div>
             </template>
 
-            <div class="btn-group mr-8" v-if="$parent.isPublishPage && !editingLayout">
+            <div class="btn-group mr-16" v-if="$parent.isPublishPage && !editingLayout">
                 <button type="button" class="btn" @click.prevent="$parent.preview">{{ translate('cp.sneak_peek') }}</button>
                 <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="caret"></span>
@@ -44,7 +45,7 @@
                 </ul>
             </div>
 
-            <div class="btn-group btn-group-primary" v-if="!editingLayout">
+            <div class="btn-group btn-group-primary" v-if="canEdit && !editingLayout">
 
                 <button v-if="! continuing" type="button" class="btn btn-primary" @click="publishWithoutContinuing" :disabled="saving">{{ translate('cp.save') }}</button>
                 <button v-else type="button" class="btn btn-primary" @click="publishAndContinue" :disabled="saving">{{ translate('cp.save_and_continue') }}</button>
@@ -65,7 +66,10 @@
 
     <div id="publish-meta" v-if="shouldShowMeta">
         <div class="card">
-            <div class="publish-fields pb-0">
+            <div v-if="loading" class="loading">
+                <span class="icon icon-circular-graph animation-spin"></span> {{ translate('cp.loading') }}
+            </div>
+            <div v-else class="publish-fields pb-0">
                 <div class="form-group title-field" v-if="shouldShowTitle">
                     <label class="block">{{ titleDisplayName }}</label>
                     <input type="text" class="form-control type-text" autofocus="autofocus" v-model="formData.fields.title" placeholder="{{ translate('cp.new') }} {{ contentType }}" />
@@ -80,7 +84,7 @@
 
                     <div class="form-group major" v-if="shouldShowDate">
                         <label class="block">{{ translate('cp.date_and_time') }}</label>
-                        <date-fieldtype name="date" :data.sync="formData.extra.datetime" :leave-alert="true"></date-fieldtype>
+                        <date-fieldtype name="date" :data.sync="formData.extra.datetime" :leave-alert="true" :config="dateFieldConfig"></date-fieldtype>
                     </div>
 
                     <status-field

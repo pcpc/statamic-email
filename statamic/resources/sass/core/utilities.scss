@@ -103,20 +103,20 @@
 .pt-120 { padding-top: 120px !important; }
 
 .ph-0 { padding-left: 0 !important; padding-right: 0px !important; }
-.ph-8 { padding-left: 8 !important; padding-right: 8px !important; }
-.ph-16 { padding-left: 16 !important; padding-right: 16px !important; }
-.ph-24 { padding-left: 24 !important; padding-right: 24px !important; }
-.ph-32 { padding-left: 32 !important; padding-right: 32px !important; }
-.ph-64 { padding-left: 64 !important; padding-right: 64px !important; }
-.ph-120 { padding-left: 120 !important; padding-right: 120px !important; }
+.ph-8 { padding-left: 8px !important; padding-right: 8px !important; }
+.ph-16 { padding-left: 16px !important; padding-right: 16px !important; }
+.ph-24 { padding-left: 24px !important; padding-right: 24px !important; }
+.ph-32 { padding-left: 32px !important; padding-right: 32px !important; }
+.ph-64 { padding-left: 64px !important; padding-right: 64px !important; }
+.ph-120 { padding-left: 120px !important; padding-right: 120px !important; }
 
 .pv-0 { padding-top: 0 !important; padding-bottom: 0px !important; }
-.pv-8 { padding-top: 8 !important; padding-bottom: 8px !important; }
-.pv-16 { padding-top: 16 !important; padding-bottom: 16px !important; }
-.pv-24 { padding-top: 24 !important; padding-bottom: 24px !important; }
-.pv-32 { padding-top: 32 !important; padding-bottom: 32px !important; }
-.pv-64 { padding-top: 64 !important; padding-bottom: 64px !important; }
-.pv-120 { padding-top: 120 !important; padding-bottom: 120px !important; }
+.pv-8 { padding-top: 8px !important; padding-bottom: 8px !important; }
+.pv-16 { padding-top: 16px !important; padding-bottom: 16px !important; }
+.pv-24 { padding-top: 24px !important; padding-bottom: 24px !important; }
+.pv-32 { padding-top: 32px !important; padding-bottom: 32px !important; }
+.pv-64 { padding-top: 64px !important; padding-bottom: 64px !important; }
+.pv-120 { padding-top: 120px !important; padding-bottom: 120px !important; }
 
 .pad-0 { padding: 0px !important; }
 .pad-8 { padding: 8px !important; }
@@ -301,12 +301,11 @@ a:focus {
 
 .full-height { height: 100%; }
 .full-width { width: 100%; }
-
+.fixed {position: fixed; }
+.hide-overflow { overflow: hidden; }
 .pad { padding: 16px; }
 
-.help-block {
-    width: 100%;
-}
+.help-block { width: 100%; }
 
 .z-depth-0 { box-shadow: none !important; }
 .z-depth-1 { box-shadow: 0 0 0 0.5px rgba(49,49,93,.03), 0 2px 5px 0 rgba(49,49,93,.1), 0 1px 2px 0 rgba(0,0,0,.08);}

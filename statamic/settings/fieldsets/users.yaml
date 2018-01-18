@@ -7,3 +7,6 @@ fields:
 
   new_user_roles:
     type: user_roles
+
+  enable_gravatar:
+    type: toggle

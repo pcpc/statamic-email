@@ -6,6 +6,7 @@ use Log;
 use Auth;
 use Socialite;
 use Statamic\API\Event;
+use Statamic\API\URL;
 use Statamic\API\Str;
 use Statamic\API\User;
 use Statamic\API\Config;
@@ -146,6 +147,8 @@ class OAuthController extends Controller
             ->get();
 
         $user->ensureId();
+
+        $user->save();
 
         $user->setOAuthId($provider, $provider_user->getId());
 

@@ -29,6 +29,7 @@
         "predis/predis": "^1.1",
         "wilderborn/partyline": "^1.0",
         "funkjedi/composer-include-files": "^1.0",
+        "guzzlehttp/guzzle": "^6.3",
         "lawson-hopkins/mjml": "*@dev"
     },
     "require-dev": {

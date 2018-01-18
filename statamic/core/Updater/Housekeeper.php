@@ -19,6 +19,7 @@ class Housekeeper
         Updates\MigrateAssets::class,
         Updates\MigrateTaxonomies::class,
         Updates\MigrateTaxonomyFields::class,
+        Updates\AddViewPermissions::class,
     ];
 
     /**

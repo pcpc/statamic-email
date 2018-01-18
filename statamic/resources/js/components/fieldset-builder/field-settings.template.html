@@ -52,8 +52,8 @@
 </div>
 
 <div class="form-group" v-if="root">
-	<label>Display Conditions</label>
-	<small class="help-block">Configure when this field will be shown.</small>
+    <label>{{ translate('cp.display_conditions') }}</label>
+    <small class="help-block">{{ translate('cp.display_conditions_instructions') }}</small>
 	<field-conditions-builder :data.sync="field.conditions"></field-conditions-builder>
 </div>
 

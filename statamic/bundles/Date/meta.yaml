@@ -7,3 +7,5 @@ fieldtype_fields:
   earliest_date:
     type: text
     default: January 1, 1900
+  format:
+    type: text

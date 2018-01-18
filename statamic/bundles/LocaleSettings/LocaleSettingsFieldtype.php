@@ -6,6 +6,11 @@ use Statamic\Extend\Fieldtype;
 
 class LocaleSettingsFieldtype extends Fieldtype
 {
+    public function blank()
+    {
+        return [];
+    }
+
     public function preProcess($data)
     {
         $processed = [];

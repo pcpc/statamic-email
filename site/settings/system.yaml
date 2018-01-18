@@ -1,4 +1,4 @@
-license_key: ""
+license_key: 017dff23-b7a9-4652-966b-f9b63a7b7cb9
 locales:
   en:
     name: English
@@ -43,3 +43,4 @@ redactor:
 csrf_exclude: [ ]
 send_powered_by_header: true
 ensure_unique_ids: false
+php_max_memory_limit: null

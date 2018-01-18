@@ -12,6 +12,7 @@ return [
     'search_for_anything' => 'Search for anything',
 
     // Pages
+    'page' => 'Page',
     'pages' => 'Page|Pages',
     'nav_pages' => 'Pages',
     'create_page_button' => 'Create Page',
@@ -43,6 +44,7 @@ return [
     'collection_route_instructions' => "The route controls the URL pattern all entries in the collection will follow.",
 
     // Entries
+    'entry' => 'Entry',
     'entries' => 'Entry|Entries',
     'nav_entries' => 'Entries',
     'create_entry_button' => 'Create Entry',
@@ -54,6 +56,7 @@ return [
     'entries_empty' => 'Entries are bits of content that have their own URL and are often shown in lists, like blog posts, press releases, and events.',
 
     // Taxonomies
+    'taxonomy' => 'Taxonomy',
     'taxonomies' => 'Taxonomy|Taxonomies',
     'nav_taxonomies' => 'Taxonomies',
     'create_taxonomy' => 'Create New Taxonomy',
@@ -77,6 +80,7 @@ return [
     'taxonomy_terms_empty' => 'Where a Taxonomy is the grouping, a Term is the actual label applied to a piece of content. For example, "Red" would be a term in "Colors".',
 
     // Globals
+    'global' => 'Global',
     'globals' => 'Global|Globals',
     'nav_globals' => 'Globals',
     'global_sets' => 'Global Sets',
@@ -126,6 +130,7 @@ return [
     'rename_file' => 'Rename File',
     'rename_file_warning' => 'Renaming a file will not update any references to it, which _may_ result in broken links in your site.',
     'move_file' => 'Move file',
+    'move_file_warning' => 'Moving a file will not update any references to it, which _may_ result in broken links in your site.',
     'dimensions' => 'Dimensions',
     'last_modified' => 'Last Modified',
 
@@ -168,6 +173,7 @@ return [
     'secret_access_key' => 'Secret Access Key',
 
     // Users
+    'user' => 'User',
     'users' => 'User|Users',
     'nav_users' => 'Users',
     'manage_users' => 'Manage Users',
@@ -299,6 +305,16 @@ return [
     'edit_field' => 'Edit Field',
     'choose_field_to_edit' => "Choose a field to edit its settings.",
 
+    'display_conditions' => 'Display Conditions',
+    'display_conditions_instructions' => 'Configure when this field will be shown.',
+    'always_show' => 'Always Show',
+    'show_when' => 'Show when...',
+    'hide_when' => 'Hide when...',
+    'standard' => 'Standard',
+    'custom' => 'Custom',
+    'display_standard_instructions' => 'Choose a combination of fields and corresponding values.',
+    'display_custom_instructions' => 'Enter your custom JavaScript condition method name.',
+
     // Forms
     'form' => 'Form',
     'forms' => 'Form|Forms',
@@ -351,6 +367,7 @@ return [
     'backing_up' => 'Backing up...',
     'backing_up_instructions' => "We're zipping up your <code>statamic</code> folder, just in case you need to roll back.",
     'backup_reminder' => 'This is a safe process. We back up everything during running the update so you can always find your most recent version in <code>local/temp</code> if something goes wrong.',
+    'couldnt_fetch_updates' => 'There was a problem fetching updates',
 
     // Download
     'downloading' => 'Downloading...',
@@ -435,6 +452,8 @@ return [
     'license_invalid' => 'This key is invalid.',
     'license_key_instructions' => 'Please enter your license key. You can find yours in your <a href=":licenses">Statamic Account</a> or you can <a href=":buy_license">buy a new license</a> if you need to.',
     'enter_license_key' => 'Please enter your license key to access to the control panel on a public domain.',
+    'add_license_key' => 'Add License Key',
+    'buy_now' => 'Buy Now',
 
     'continue_in_trial_mode' => 'Continue in Trial Mode',
     'unlicensed' => 'Unlicensed',
@@ -501,6 +520,8 @@ return [
     'please_select' => 'Please select',
     'selected' => 'selected',
     'add_another_item' => 'Add another item',
+    'show_drafts' => 'Show Drafts',
+    'hide_drafts' => 'Hide Drafts',
 
     // Nouns and whatnot
     'fields' => 'Field|Fields',
@@ -583,6 +604,7 @@ return [
     'be_right_back' => 'Be right back.',
     'size' => 'Size',
     'attribute_field_name' => ':attribute field',
+    'read_only_mode' => "Read Only Mode",
 
     'nav_content' => 'Content',
     'nav_tools' => 'Tools',
@@ -604,6 +626,10 @@ return [
 
     // Duplicate ID Manager
     'duplicate_id_title' => 'Duplicate IDs',
-    'no_duplicate_ids' => 'No duplicate IDs detected.'
+    'no_duplicate_ids' => 'No duplicate IDs detected.',
 
+    // Path
+    'path_resolves_to'    => 'Path resolves to :path',
+    'path_exists'         => 'Path exists.',
+    'path_does_not_exist' => 'Path does not exist.',
 ];

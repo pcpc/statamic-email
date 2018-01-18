@@ -11,8 +11,8 @@
                   <div class="fill">
                         @if ($is_trial) {{ t('trial_mode_badge') }} @elseif ($is_unlicensed){{ t('unlicensed') }} @endif
                   </div>
-                  <a href="{{ route('licensing') }}" class="btn btn-small mr-16">Add License Key</a>
-                  <a href="https://statamic.com/buy" class="btn btn-primary btn-small" target="_blank">Buy Now</a>
+                  <a href="{{ route('licensing') }}" class="btn btn-small mr-16">{{ t('add_license_key')  }}</a>
+                  <a href="https://statamic.com/buy" class="btn btn-primary btn-small" target="_blank">{{ t('buy_now')  }}</a>
             </div>
       @endif
 
@@ -20,7 +20,7 @@
 
       <nav class="nav-mobile">
           <a href="{{ route('cp') }}" class="logo">
-              {!! inline_svg('PCPC-vine-logo-white') !!}
+              {!! svg('statamic-logo') !!}
           </a>
           <a @click.prevent="toggleNav" class="toggle">
               <span class="icon icon-menu"></span>
@@ -36,23 +36,13 @@
       </div>
 
       @include('partials.shortcuts')
+      @include('partials.alerts')
+      @include('partials.global-header')
 
-      <div class="application-grid">
+      <div class="application-grid @yield('content-class')">
+            @include('partials.nav-main')
 
-            <nav class="nav-main">
-                  <a href="{{ route('cp') }}" class="logo">
-                        {!! inline_svg('PCPC-vine-logo-blue') !!}
-                        <span class="version" v-cloak>@{{ version }}</span>
-                  </a>
-                  @include('partials.nav-main')
-            </nav>
-
-            <div class="content @yield('content-class')">
-
-                  @include('partials.global-header')
-
-                  @include('partials.alerts')
-
+            <div class="content">
                   <div class="page-wrapper">
                         <div class="sneak-peek-header flexy">
                               <h1 class="fill">{{ trans('cp.sneak_peeking') }}</h1>

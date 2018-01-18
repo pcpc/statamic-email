@@ -151,7 +151,7 @@ class InstallerController extends Controller
     {
         // The fields we're expecting, organized by their respective files.
         $fields = [
-            'system' => ['locales'],
+            'system' => ['locales', 'timezone'],
             'debug' => ['debug'],
         ];
 

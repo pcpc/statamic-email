@@ -69,6 +69,21 @@
     border-radius: 2px;
 }
 
+.btn.btn-round {
+    height: 32px;
+    width: 32px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+    span {
+        font-size: 18px;
+        line-height: 34px;
+        width: 32px;
+    }
+}
+
 .btn-icon-small,
 td .btn-icon {
     @extend .btn-icon;
@@ -142,6 +157,11 @@ td .btn-icon {
 
     .btn.btn-primary:hover {
         background: mix(black, $brand-primary, 5%);
+    }
+
+    .btn.btn-danger:hover,
+    .btn.btn-danger.depressed {
+        background-color: #ac2925;
     }
 
     > .btn:first-child:not(:last-child):not(.dropdown-toggle) {

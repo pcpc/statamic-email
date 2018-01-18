@@ -110,7 +110,7 @@ class Form
             $fields[] = [
                 'field' => $key,
                 'name' => $key, // alias
-                'old' => (Req::hasSession()) ? old($key) : ''
+                'old' => (Req::hasSession()) ? sanitize(old($key)) : ''
             ] + $field;
         }
 

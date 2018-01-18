@@ -83,7 +83,9 @@ class Router
 
         $action['uses'] = $this->getAction($addon, $action['uses']);
 
-        $this->router->$verb($route, $action)->middleware(cp_middleware());
+        $middleware = array_merge(cp_middleware(), ['auth']);
+
+        $this->router->$verb($route, $action)->middleware($middleware);
     }
 
     /**

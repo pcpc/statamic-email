@@ -11,9 +11,12 @@ use Statamic\API\Helper;
 use Statamic\API\Cache;
 use Statamic\API\Stache;
 use Statamic\Config\Settings;
+use Statamic\CP\Publish\ProcessesFields;
 
 class SettingsController extends CpController
 {
+    use ProcessesFields;
+
     protected $name;
 
     public function index()
@@ -23,13 +26,10 @@ class SettingsController extends CpController
 
     public function edit($name)
     {
-        $data = Config::get($name);
-
-        $fieldset = Fieldset::get($name, 'settings');
-
-        $data = $this->preProcessData($data, $fieldset);
-
-        $data = $this->populateWithBlanks($fieldset, $data);
+        $data = $this->preProcessWithBlankFields(
+            Fieldset::get($name, 'settings'),
+            Config::get($name)
+        );
 
         return view('settings.edit', [
             'title' => t('settings_'.$name),
@@ -47,7 +47,7 @@ class SettingsController extends CpController
     {
         $this->name = $name;
 
-        $data = $this->processFields();
+        $data = $this->processFields(Fieldset::get($this->name, 'settings'), $this->request->input('fields'));
 
         // Replace environment-managed values with their raw equivalents
 
@@ -68,66 +68,6 @@ class SettingsController extends CpController
         $this->success('Settings updated');
 
         return ['success' => true, 'redirect' => route('settings.edit', $name)];
-    }
-
-    private function processFields()
-    {
-        $fieldset = Fieldset::get($this->name, 'settings');
-        $data = $this->request->input('fields');
-
-        foreach ($fieldset->fieldtypes() as $field) {
-            if (! in_array($field->getName(), array_keys($data))) {
-                continue;
-            }
-
-            $data[$field->getName()] = $field->process($data[$field->getName()]);
-        }
-
-        // Get rid of null fields
-        $data = array_filter($data, function($value) {
-            return !is_null($value);
-        });
-
-        return $data;
-    }
-
-    /**
-     * Create the data array, populating it with blank values for all fields in
-     * the fieldset, then overriding with the actual data where applicable.
-     *
-     * @param string $fieldset
-     * @param array $data
-     * @return array
-     */
-    private function populateWithBlanks($fieldset, $data)
-    {
-        // Get the fieldtypes
-        $fieldtypes = collect($fieldset->fieldtypes())->keyBy(function($ft) {
-            return $ft->getName();
-        });
-
-        // Build up the blanks
-        $blanks = [];
-        foreach ($fieldset->fields() as $name => $config) {
-            $blanks[$name] = $fieldtypes->get($name)->blank();
-        }
-
-        return array_merge($blanks, $data);
-    }
-
-    private function preProcessData($data, $fieldset)
-    {
-        $fieldtypes = collect($fieldset->fieldtypes())->keyBy(function($fieldtype) {
-            return $fieldtype->getFieldConfig('name');
-        });
-
-        foreach ($data as $field_name => $field_data) {
-            if ($fieldtype = $fieldtypes->get($field_name)) {
-                $data[$field_name] = $fieldtype->preProcess($field_data);
-            }
-        }
-
-        return $data;
     }
 
     public function licenseKey()

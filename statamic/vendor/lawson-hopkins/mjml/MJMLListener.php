@@ -36,10 +36,17 @@ class MJMLListener extends Listener
 
     public function createMJMLCode ($entry)
     {
+
       /* BZ - change on localhost for images to work if testing MJML code */
-      define("DEV_SITE_URL", 'http://pcpcemail.dev');
+      define("DEV_SITE_URL", 'http://email.pcpcnetwork.org');
 
       $blocks = $entry->get('content_blocks');
+
+      // don't do anything unless the type of entry is 'email' (i.e. has blocks)
+
+      if (is_null($blocks)) {
+          return;
+      }
 
       $block_count = count($blocks);
 
@@ -53,7 +60,10 @@ class MJMLListener extends Listener
       $mjml_code = '<mjml>';
       /* will need to determine how to add head inline-style classes only once, only as needed, probably cycle through all distinct block types */
       $mjml_head = '<mj-head>';
+      // add styles to all
+      $mjml_head .= '<mj-attributes><mj-text padding-top="0" padding-bottom="0" /></mj-attributes>';
       $mjml_body = '<mj-body><mj-container>';
+      $mjmj_styles = '';
 
       for ($i=0; $i < count($block_types); $i++) {
         switch ($block_types[$i]) {
@@ -67,7 +77,12 @@ class MJMLListener extends Listener
                 $mjml_body .= $this->addMJMLBodyTextBlock($blocks[$i]['email_text']);
                 break;
             case 'text_and_image':
-                $mjml_body .= $this->addMJMLBodyTextAndImage($blocks[$i]['text_and_image_text'], $blocks[$i]['text_and_image_image'], $blocks[$i]['arrangement']);
+                if (!(isset($blocks[$i]['text_and_image_header']))) {
+                    $text_and_image_header = '';
+                } else {
+                    $text_and_image_header = $blocks[$i]['text_and_image_header'];
+                }
+                $mjml_body .= $this->addMJMLBodyTextAndImage($text_and_image_header, $blocks[$i]['text_and_image_text'], $blocks[$i]['text_and_image_image'], $blocks[$i]['arrangement']);
                 break;
             case 'signature_image':
                 $mjml_body .= $this->addMJMLBodySignatureImage($blocks[$i]['signature']);
@@ -84,10 +99,20 @@ class MJMLListener extends Listener
                 $mjml_body .= $this->addMJMLBodyButton($blocks[$i]['button_text'], $blocks[$i]['button_link']);
                 break;
             case 'divider':
-                $mjml_body .= $this->addMJMLBodyDivider($blocks[$i]['divider_text']);
+                if (!(isset($blocks[$i]['divider_text']))) {
+                    $divider_text = '';
+                } else {
+                    $divider_text = $blocks[$i]['divider_text'];
+                }
+                $mjml_body .= $this->addMJMLBodyDivider($divider_text);
+                break;
+            case 'scripture':
+                $mjml_body .= $this->addMJMLBodyScripture($blocks[$i]['reference']);
                 break;
         }
       }
+
+      $mjml_body .= $this->addMJMLFooter();
 
       $unique_block_types = array_unique($block_types);
       $inline_classes = array();
@@ -186,36 +211,50 @@ class MJMLListener extends Listener
         return $string;
     }
 
-    public function addMJMLBodyTextAndImage ($text_and_image_text, $text_and_image_image, $arrangement) {
+    public function addMJMLBodyTextAndImage ($text_and_image_header, $text_and_image_text, $text_and_image_image, $arrangement) {
+        if (strlen($text_and_image_header) > 0) {
+            $header = '<mj-text align="left" color="#000000" font-size="20" line-height="1.25" font-family="Helvetica Neue">'.$text_and_image_header.'</mj-text>';
+        } else {
+            $header = '';
+        }
         switch ($arrangement) {
             case 'image-left':
                     $string =  '<mj-section background-color="#ffffff">
                                     <mj-column>
-                                        <mj-image width="200" src="' . DEV_SITE_URL . $text_and_image_image . '" />
+                                        <mj-image width="250" height="200" src="' . DEV_SITE_URL . $text_and_image_image . '" />
                                     </mj-column>
                                     <mj-column>
+                                        '.$header.'
                                         <mj-text align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.markdown($text_and_image_text).'</mj-text>
                                     </mj-column>
                                 </mj-section>';
                     break;
             case 'image-right':
+                    if (strlen($text_and_image_header) > 0) {
+                        $header = '<mj-text align="right" color="#000000" font-size="20" line-height="1.25" font-family="Helvetica Neue">'.$text_and_image_header.'</mj-text>';
+                    } else {
+                        $header = '';
+                    }
                     $string =  '<mj-section background-color="#ffffff">
                                     <mj-column>
-                                        <mj-text align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.markdown($text_and_image_text).'</mj-text>
+                                        '.$header.'
+                                        <mj-text align="right" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.markdown($text_and_image_text).'</mj-text>
                                     </mj-column>
                                     <mj-column>
-                                        <mj-image width="200" src="' . DEV_SITE_URL . $text_and_image_image . '" />
+                                        <mj-image width="250" height="200" src="' . DEV_SITE_URL . $text_and_image_image . '" />
                                     </mj-column>
                                 </mj-section>';
                     break;
             case 'image-top':
                     $string =  '<mj-section background-color="#ffffff">
                                     <mj-image width="400" src="' . DEV_SITE_URL . $text_and_image_image . '" />
+                                    '.$header.'
                                     <mj-text width="400" align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.markdown($text_and_image_text).'</mj-text>
                                 </mj-section>';
                     break;
             case 'image-bottom':
                     $string =  '<mj-section background-color="#ffffff">
+                                    '.$header.'
                                     <mj-text width="400" align="left" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.markdown($text_and_image_text).'</mj-text>
                                     <mj-image width="400" src="' . DEV_SITE_URL . $text_and_image_image . '" />
                                 </mj-section>';
@@ -278,7 +317,7 @@ class MJMLListener extends Listener
     }
 
     public function addMJMLBodyButton ($button_text, $button_link) {
-        $string =   '<mj-section>
+        $string =   '<mj-section background-color="#ffffff">
                         <mj-column>
                             <mj-button href="' . $button_link . '" background-color="#A7885D" color="#ffffff" font-size="14" line-height="1.25" font-family="Helvetica Neue">'.$button_text.'</mj-button>
                         </mj-column>
@@ -288,13 +327,12 @@ class MJMLListener extends Listener
     }
 
     public function addMJMLBodyDivider ($divider_text) {
-        /* WAZ - not currently working when no divider text is entered... */
-        if (is_null($divider_text)) {
+        if (strlen($divider_text) < 1) {
             $divider_addon = '';
         } else {
-            $divider_addon = '<mj-text font-size="14" line-height="1.25" font-family="Helvetica Neue" align="center" color="#999999" letter-spacing="1px">'.strtoupper($divider_text).'</mj-text><mj-divider border-width="1px" border-style="dashed" border-color="lightgrey" />';
+            $divider_addon = '<mj-text font-size="14" line-height="1" padding="0" font-family="Helvetica Neue" align="center" color="#999999" letter-spacing="1px">'.strtoupper($divider_text).'</mj-text><mj-divider border-width="1px" border-style="dashed" border-color="lightgrey" />';
         }
-        $string =   '<mj-section>
+        $string =   '<mj-section background-color="#ffffff">
                         <mj-column>
                             <mj-divider border-width="1px" border-style="dashed" border-color="lightgrey" />
                             '.$divider_addon.'
@@ -304,21 +342,123 @@ class MJMLListener extends Listener
         return $string;
     }
 
+    public function addMJMLBodyScripture ($reference) {
+
+        /* $url_ref = urlencode($reference);
+        $ref = array(
+            'q' => $url_ref
+        );
+
+        $ref = json_encode($ref);
+
+        $ch = curl_init('https://api.esv.org/v3/passage/text/');
+        // curl_setopt($ch, CURLOPT_URL, 'https://api.esv.org/v3/passage/text/');
+        // curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        $headr = array();
+        $headr[] = 'Content-type: application/json';
+        $headr[] = 'Authorization: Token 28df28a3b3a2be32092d75d40101036209b1fc45';
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
+        
+        // curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $ref);
+        $scripture_result=curl_exec($ch);
+        $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);   //get status code
+        curl_close($ch); */
+
+
+        $key = 'fd9cfff133478926';
+        $passage = urlencode($reference);
+        $options = "include-passage-references=true&include-verse-numbers=false&include-headings=false&include-short-copyright=false&include-audio-link=false";
+        $url = "http://www.esvapi.org/v2/rest/passageQuery?key=$key&passage=$passage&$options";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        /* curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+        $headr = array();
+        $headr[] = 'Accept: application/json';
+        $headr[] = 'Authorization: Token 28df28a3b3a2be32092d75d40101036209b1fc45';
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headr); */
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+        //curl_setopt($ch, CURLOPT_POSTFIELDS, $passage);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        $scripture_result = curl_exec($ch);
+        $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+       /*  $ch = curl_init();
+        
+        curl_setopt($ch, CURLOPT_URL, "https://api.esv.org/v3/passage/text/?q=jn11.35");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        //curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+        
+        
+        $headers = array();
+        $headers[] = "Accept: application/json";
+        $headers[] = "Authorization: Token 2338476f4eeffbbc9817f8265ef179b27f86d3ea";
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        
+        $scripture_result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+        curl_close ($ch); */
+
+
+        $string =  '<mj-section background-color="#ffffff">
+                        <mj-column width="400">
+                            <mj-text align="center" color="#000000" font-size="14" line-height="1.25" font-family="Helvetica Neue" font-style="italic">'.$scripture_result.'</mj-text>
+                        </mj-column>
+                    </mj-section>';
+
+        return $string;
+    }
+
+    
+
+    public function addMJMLFooter () {
+        $string =   '<mj-section background-color="#3C6885">
+                        <mj-column>
+                            <mj-image padding-top="45" width="100" src=" ' . DEV_SITE_URL . '/assets/img/PCPC-vine-logo-white.svg" />
+                            <mj-text align="center" color="#fff" font-size="12" line-height="1" padding-bottom="45" font-family="Helvetica Neue">
+                                <p>Park Cities Presbyterian Church</p>
+                                <p>4124 Oak Lawn Avenue</p>
+                                <p>Dallas, TX 75219</p>
+                                <a href="tel:2142242500" style="color:white; text-decoration:none;">214-224-2500</a>
+                            </mj-text>
+                        </mj-column>
+                    </mj-section>';
+        
+        return $string;
+    }
+
     public function addMJMLHeadInlineClasses ($classes) {
+        $mjml_styles='';
         $unique_classes = array_unique($classes);
-        $mjml_styles = '<mj-style inline="inline">';
         foreach ($unique_classes as $c) {
             switch ($c) {
                 case 'italic':
+                    $mjml_styles .= '<mj-style inline="inline">';
                     $mjml_styles .=  '
                                     .italic {
                                         font-style: italic;
                                     }
                                    ';
+                    $mjml_styles .= '</mj-style>';
+                    break;
+                case 'scripture':
+                    $mjml_styles = '<mj-style inline="scripture">';
+                    $mjml_styles .=  '
+                                    .scripture {
+                                        font-style: italic;
+                                    }
+                                ';
+                    $mjml_styles .= '</mj-style>';
                     break;
             }
         }
-        $mjml_styles .= '</mj-style>';
         
         return $mjml_styles;
     }

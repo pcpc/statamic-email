@@ -4,6 +4,7 @@ namespace Statamic\Routing;
 
 use Statamic\API\Config;
 use Statamic\API\URL;
+use Statamic\API\Content;
 
 class Route
 {
@@ -49,9 +50,26 @@ class Route
 
     public function toArray()
     {
-        return array_merge($this->data, [
+        return array_merge($this->data, $this->loadedData(), [
             'url' => $this->url(),
             'permalink' => $this->absoluteUrl(),
         ]);
+    }
+
+    public function loadedData()
+    {
+        if (! $load = array_get($this->data, 'load')) {
+            return [];
+        }
+
+        if ($content = Content::find($load)) {
+            return $content->toArray();
+        }
+
+        if ($content = Content::whereUri($load)) {
+            return $content->toArray();
+        }
+
+        return [];
     }
 }
