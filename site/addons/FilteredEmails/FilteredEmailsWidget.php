@@ -10,6 +10,8 @@ use Statamic\API\Collection;
 //use Statamic\Addons\Ministry;
 use Statamic\API\Entry;
 
+define("DEV_SITE_URL_2", $_SERVER['HTTP_HOST']);
+
 class FilteredEmailsWidget extends Widget
 {
     /**
@@ -19,13 +21,14 @@ class FilteredEmailsWidget extends Widget
      */
     public function html()
     {
+        
 
         $emails = $this->getEmails();
 
         $html = '<div class="card flush">
             <div class="head">
-                <h1><a href="https://email.pcpcnetwork.org/cp/collections/entries/email">Emails</a></h1>
-                <a href="https://email.pcpcnetwork.org/cp/collections/entries/email/create" class="btn btn-primary">Add New Email</a>
+                <h1><a href="/cp/collections/entries/email">Emails</a></h1>
+                <a href="/cp/collections/entries/email/create" class="btn btn-primary">Add New Email</a>
             </div>
             <div class="card-body pad-16">
                 <table class="dossier">
@@ -55,7 +58,7 @@ class FilteredEmailsWidget extends Widget
                             $slug_url = $t['slug_url'];
                             $date = $t['date'];
                             $html .= '<tr>
-                            <td><a href="https://email.pcpcnetwork.org/cp/collections/entries/email/' . $slug_url . '">'.$title.'</a></td>
+                            <td><a href="/cp/collections/entries/email/' . $slug_url . '">'.$title.'</a></td>
                             <td class="minor text-center"></td>
                             <td class="minor text-right">'.$date.'</td>
                         </tr>';
