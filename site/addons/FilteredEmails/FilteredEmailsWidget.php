@@ -10,7 +10,7 @@ use Statamic\API\Collection;
 //use Statamic\Addons\Ministry;
 use Statamic\API\Entry;
 
-define("DEV_SITE_URL_2", $_SERVER['HTTP_HOST']);
+//define("DEV_SITE_URL_2", $_SERVER['HTTP_HOST']);
 
 class FilteredEmailsWidget extends Widget
 {
@@ -84,7 +84,7 @@ class FilteredEmailsWidget extends Widget
             </div>
         </div>';
 
-        return $html;
+        return $html;*/
 
     }
 
