@@ -38,7 +38,8 @@ class MJMLListener extends Listener
     {
 
       /* BZ - change on localhost for images to work if testing MJML code */
-      define("DEV_SITE_URL", $_SERVER['HTTP_HOST']);
+      $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
+      define("DEV_SITE_URL", $protocol . $_SERVER['HTTP_HOST']);
 
       $blocks = $entry->get('content_blocks');
 

@@ -70,21 +70,14 @@ class FilteredEmailsWidget extends Widget
                         //$slug_url = $email['slug'];
                         $title = "title";//$email->title;
                         $slug_url = 'slug';//$email->slug;
-                        /* $html .= '<tr>
-                            <td><a href="http://pcpcemail.test/cp/collections/entries/email/' . $slug_url . '">'.$title.'</a></td>
-                            <td class="minor text-right">2017/11/08</td>
-                        </tr>'; */
+                        
                     }
                     
                     
 
         /* $content .= $emails->map(function ($item, $key) use ($html) { 
             //$slug_url = $item->slug();
-            $html .= '<tr>
-                        <td><a href="http://pcpcemail.test/cp/collections/entries/email/bryan-newman-email">Bryan Newman Email</a></td>
-                        <td class="minor text-right">2017/11/08</td>
-                    </tr>';
-        }); */
+           
         //$html .=  $content;
         $html .=    '</tbody>
                 </table>
