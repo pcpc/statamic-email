@@ -21,8 +21,8 @@ class FilteredEmailsWidget extends Widget
      */
     public function html()
     {
-        
-      $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
+    
+      $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === false ? 'http://' : 'https://';
       define("DEV_SITE_URL_2", $protocol . $_SERVER['HTTP_HOST']);
 
         $emails = $this->getEmails();
