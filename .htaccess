@@ -20,7 +20,7 @@
 
 Options -MultiViews
 RewriteEngine On
-RewriteBase /
+# RewriteBase /
 
 
 # ------------------------------------------------------------------------------
