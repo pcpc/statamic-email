@@ -4,7 +4,8 @@
         :class="{
             'max-files-reached': maxFilesReached,
             'empty': ! assets.length,
-            'solo drag-handle': soloAsset
+            'solo': soloAsset,
+            'bard-drag-handle': isInBardField
         }"
         @dragover="dragOver"
         @dragleave="dragStop"

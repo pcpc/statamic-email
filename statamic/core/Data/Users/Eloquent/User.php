@@ -118,7 +118,9 @@ class User extends FileUser
             return $this->defaultData();
         }
 
-        $this->model()->setRawAttributes($data);
+        $this->model()->setRawAttributes(
+            array_merge($this->data(), $data)
+        );
 
         return $this;
     }

@@ -212,7 +212,7 @@ export default {
         draggable() {
             const draggable = new Draggable(this.$els.blocks, {
                 draggable: '.bard-block',
-                handle: '.drag-handle',
+                handle: '.bard-drag-handle',
                 mirror: {
                     xAxis: false,
                     constrainDimensions: true

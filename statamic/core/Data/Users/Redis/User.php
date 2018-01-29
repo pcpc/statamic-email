@@ -27,7 +27,7 @@ class User extends FileUser
      */
     public function lastModified()
     {
-        return $this->get('last_modified');
+        return Carbon::createFromTimestamp($this->get('last_modified', time()));
     }
 
     /**

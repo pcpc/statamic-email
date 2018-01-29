@@ -2,6 +2,7 @@
 
 namespace Statamic\Data\Users;
 
+use Statamic\API\Arr;
 use Statamic\API\Config;
 use Statamic\Contracts\Data\Users\User;
 use Statamic\Contracts\Data\Users\UserFactory as UserFactoryContract;
@@ -58,13 +59,28 @@ class UserFactory implements UserFactoryContract
     }
 
     /**
+     * @return mixed
+     */
+    public function save()
+    {
+        return $this->get()->save();
+    }
+
+    /**
      * @return \Statamic\Contracts\Data\Users\User
      */
     public function get()
     {
+        $data = $this->data;
+        $password = Arr::pull($data, 'password');
+
         $user = app(User::class);
-        $user->data($this->data);
         $user->username($this->username);
+        $user->data($data);
+
+        if ($password) {
+            $user->password($password);
+        }
 
         if (Config::get('users.login_type') === 'username') {
             $user->email($this->email);

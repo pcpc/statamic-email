@@ -3,6 +3,7 @@
 namespace Statamic\Addons\User;
 
 use Validator;
+use Statamic\API\Arr;
 use Statamic\API\User;
 use Statamic\API\Config;
 use Statamic\API\Helper;
@@ -52,10 +53,15 @@ class UserRegistrar
      */
     public function create()
     {
+        $data = $this->userData();
+        $password = Arr::pull($data, 'password');
+
         $user = User::create()
             ->username($this->request->input(Config::get('users.login_type')))
-            ->with($this->userData())
+            ->with($data)
             ->get();
+
+        $user->password($password);
 
         return $user;
     }

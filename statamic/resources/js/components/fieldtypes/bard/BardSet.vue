@@ -5,7 +5,7 @@
         <slot name="divider-start"></slot>
 
         <div class="list-group">
-            <div class="list-group-item group-header drag-handle" :class="{'collapsed': isHidden}" @dblclick="toggle" v-if="! goingSolo">
+            <div class="list-group-item group-header bard-drag-handle" :class="{'collapsed': isHidden}" @dblclick="toggle" v-if="! goingSolo">
                 <div class="flexy">
                     <div class="fill">
                         <div class="flexy baseline">
@@ -33,7 +33,7 @@
                 <div class="row">
                     <div v-for="field in config.fields" class="{{ colClass(field.width) }}">
                         <div class="form-group {{ field.type }}-fieldtype">
-                            <div :class="{'drag-handle': goingSolo}">
+                            <div :class="{'bard-drag-handle': goingSolo}">
                                 <label class="block" :class="{'bold': field.bold}">
                                     <template v-if="field.display">{{ field.display }}</template>
                                     <template v-if="!field.display">{{ field.name | capitalize }}</template>

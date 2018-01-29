@@ -20,9 +20,4 @@ class RevealerFieldtype extends Fieldtype
     {
         return $data ?: false;
     }
-
-    public function process($data)
-    {
-        return null;
-    }
 }

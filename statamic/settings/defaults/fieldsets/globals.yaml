@@ -1,6 +1,1 @@
-fields:
-  site_name:
-    type: text
-    display: Website Name
-    instructions: The name of your website
-    localizable: true
+fields: []

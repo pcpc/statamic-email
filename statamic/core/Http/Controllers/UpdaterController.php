@@ -53,6 +53,10 @@ class UpdaterController extends CpController
     {
         $this->access('updater:update');
 
+        if (! $this->isVersionNumber($version)) {
+            return redirect()->route('updater');
+        }
+
         $title = version_compare($version, STATAMIC_VERSION, '>') ? "Upgrade" : "Downgrade";
 
         return view('updater.confirm', [
@@ -60,6 +64,17 @@ class UpdaterController extends CpController
             'version' => $version,
             'license_key' => Config::get('system.license_key', false)
         ]);
+    }
+
+    /**
+     * Check if a given version string is a valid version number.
+     *
+     * @param string $version
+     * @return bool
+     */
+    private function isVersionNumber($version)
+    {
+        return version_compare($version, '0.0.1', '>=');
     }
 
     /**
